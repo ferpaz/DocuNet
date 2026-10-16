@@ -1,0 +1,2 @@
+# Preserve historical Spark/CSS/JS resources byte-for-byte, including their original formatting.
+DocuNet.Rendering/Templates/** -text -whitespace

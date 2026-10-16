@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsTestProject>true</IsTestProject><TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" PrivateAssets="all" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="AngleSharp" />
+    <ProjectReference Include="../../DocuNet.Cli/DocuNet.Cli.csproj" />
+    <ProjectReference Include="../../DocuNet.Core/DocuNet.Core.csproj" />
+    <ProjectReference Include="../../DocuNet.Rendering/DocuNet.Rendering.csproj" />
+    <ProjectReference Include="../DocuNet.TestFixtures/DocuNet.TestFixtures.csproj" ReferenceOutputAssembly="false" />
+    <Using Include="Xunit" />
+    <Content Include="../DocuNet.TestFixtures/bin/$(Configuration)/net10.0/DocuNet.TestFixtures.dll" Link="Fixtures/Model.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../DocuNet.TestFixtures/bin/$(Configuration)/net10.0/DocuNet.TestFixtures.xml" Link="Fixtures/Model.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../DocuNet.Rendering/Templates/**/*" Link="Templates/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

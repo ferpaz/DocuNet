@@ -1,0 +1,13 @@
+# Muestras privadas: no versionar DLL/XML/PDB ni sitio de referencia
+/samples/**
+
+# Salidas y entornos locales regenerables; resultados de pruebas tienen su propio .gitignore
+/output/
+/artifacts/
+/.artifacts/
+/.local/
+
+# Archivo local de la reconstrucción inicial; seguimiento público mediante GitHub Issues
+/docs/analysis/**/*
+/docs/requirements/**/*
+!/docs/requirements/README.md

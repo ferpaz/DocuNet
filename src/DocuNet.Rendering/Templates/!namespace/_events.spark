@@ -1,0 +1,13 @@
+<if condition="events.Count() > 0">
+  <h3 class="section">${title}</h3>
+
+  <div id="${Anchor(ev)}" class="method" each="var ev in events">
+        <a if="LegacyAnchor(ev).Length > 0" id="${LegacyAnchor(ev)}"></a>
+    <h4><strong>${h(ev.Name)}</strong></h4>
+    <div class="content">
+      <comment content="ev.Summary" />
+      <remarks content="ev.Remarks" />
+      <example content="ev.Example" />
+    </div>
+  </div>
+</if>

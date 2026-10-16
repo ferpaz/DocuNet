@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>${WriteProductName(Assemblies[0])} Data Model API Documentation</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link type="text/css" rel="stylesheet" href="main.css" />
+	</head>
+	<body>
+	<header><h1>${WriteProductName(Assemblies[0])} : Data Model API Documentation</h1>
+	</header>
+    <namespaces />
+    <types />
+	<article>
+    <header>
+		<p class="class">${WriteProductName(Assemblies[0])} Data Model Documentation</p>
+	</header>
+	</article>
+    <use file="_common_footer" />
+  </body>
+</html>

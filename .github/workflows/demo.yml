@@ -1,0 +1,65 @@
+name: Publish demo
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-demo
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    defaults:
+      run:
+        working-directory: src
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: src/global.json
+          cache: true
+          cache-dependency-path: src/**/packages.lock.json
+      - name: Restore dependencies
+        run: dotnet restore --locked-mode
+      - name: Build CLI and synthetic fixture
+        run: dotnet build --no-restore --configuration Release
+      - name: Run tests and collect coverage
+        run: dotnet test --no-build --configuration Release --coverage --coverage-settings coverage.config --coverage-output-format cobertura --coverage-output "${{ runner.temp }}/demo-coverage/coverage.cobertura.xml" --results-directory "${{ runner.temp }}/demo-coverage"
+      - name: Check coverage thresholds
+        shell: pwsh
+        run: ./Check-Coverage.ps1 -Report "${{ runner.temp }}/demo-coverage/coverage.cobertura.xml"
+      - name: Generate demo from public synthetic fixture
+        shell: bash
+        run: |
+          dotnet run --no-build --configuration Release --project DocuNet.Cli -- "--output=$RUNNER_TEMP/docunet-demo" tests/DocuNet.TestFixtures/bin/Release/net10.0/DocuNet.TestFixtures.dll
+          cp "$RUNNER_TEMP/docunet-demo/index.htm" "$RUNNER_TEMP/docunet-demo/index.html"
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload generated site only
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ runner.temp }}/docunet-demo
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy demo to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

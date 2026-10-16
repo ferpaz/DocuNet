@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="DocuNet.Cli/DocuNet.Cli.csproj" />
+    <Project Path="DocuNet.Core/DocuNet.Core.csproj" />
+    <Project Path="DocuNet.Rendering/DocuNet.Rendering.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DocuNet.Tests/DocuNet.Tests.csproj" />
+    <Project Path="tests/DocuNet.TestFixtures/DocuNet.TestFixtures.csproj" />
+  </Folder>
+</Solution>
