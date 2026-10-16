@@ -4,7 +4,7 @@ Generate static HTML documentation for .NET libraries from their assemblies and 
 
 DocuNet is a command-line tool written in C# and .NET 10. It reads metadata without executing the documented assembly's code. The resulting site can be browsed locally or published to static hosting, with no backend.
 
-[View the demo: publishing and local example](docs/demo.md) — a synthetic demo prepared for GitHub Pages; the public URL will be available after the first deployment.
+[View the live demo](https://ferpaz.github.io/DocuNet/) — generated from the public synthetic fixture. See [publishing and local demo instructions](docs/demo.md).
 
 ## Features
 

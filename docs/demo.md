@@ -26,7 +26,7 @@ Once the public repository has been created and changes pushed:
 4. Run Publish demo from Actions on master, or push a change to that branch.
 5. Check the URL emitted by deployment and update the README's "View the demo" link to that address.
 
-The remote demo is not currently published. The prepared workflow and local checks do not establish that GitHub Actions has run. The README links to these instructions until the actual URL is available.
+The [live demo](https://ferpaz.github.io/DocuNet/) is published on GitHub Pages. The [first successful deployment](https://github.com/ferpaz/DocuNet/actions/runs/38938037089) completed on October 16, 2026; the public entry point and third-party notices were verified to return HTTP 200. The setup steps above also apply when configuring a fork.
 
 Official documentation: [GitHub Pages workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
