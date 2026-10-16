@@ -1,8 +1,8 @@
-# Organización del código fuente
+# Source layout
 
-La estructura mantiene juntos los proyectos y la configuración de desarrollo.
+The structure keeps projects and development configuration together.
 
-Todo el código fuente y los archivos que gobiernan su desarrollo se ubican dentro de `src/`:
+All source code and files governing its development belong inside src/:
 
 ```text
 src/
@@ -27,17 +27,17 @@ docs/
     requirements/
 ```
 
-- La solución y todos los proyectos, incluido el proyecto de pruebas, permanecen en `src/`.
-- `src/Directory.Build.props` contiene las propiedades comunes de los proyectos.
-- `src/Directory.Packages.props` habilita la gestión central de NuGet y contiene las versiones de Cli, Core y Rendering. Los proyectos bajo `src/tests/` usan automáticamente su catálogo independiente `src/tests/Directory.Packages.props`, sin importar el catálogo de producción.
-- `src/global.json` selecciona el SDK; ejecute los comandos de desarrollo desde `src/` para que se aplique.
-- `src/.editorconfig` define las convenciones del código.
-- `src/.gitattributes` preserva los recursos y plantillas heredados sin conversión de fin de línea ni normalización de su formato original.
-- `src/.gitignore` reúne las exclusiones de .NET/C#, JetBrains Rider, Visual Studio Code, Visual Studio y los sistemas operativos. Se generó desde [Toptal/gitignore.io](https://www.toptal.com/developers/gitignore/api/rider,visualstudio,visualstudiocode,csharp,dotnetcore,windows,linux,macos). El servicio ofrece la plantilla genérica VisualStudio para Visual Studio 2026.
-- `tests/fixtures/` y `tests/results/` en la raíz contienen insumos y evidencias del arnés, no el proyecto de pruebas.
-- `docs/` conserva documentación y `docs/requirements/` expedientes. Las muestras privadas se mantienen fuera del código fuente e ignoradas en `samples/`.
+- The solution and all projects, including test projects, remain inside src/.
+- src/Directory.Build.props contains shared project properties.
+- src/Directory.Packages.props enables central NuGet management and contains versions for Cli, Core and Rendering. Projects under src/tests/ automatically use their independent src/tests/Directory.Packages.props catalog, without importing the production catalog.
+- src/global.json selects the SDK; run development commands from src/ so it applies.
+- src/.editorconfig defines code conventions.
+- src/.gitattributes preserves legacy resources and templates without line-ending conversion or normalization of their original formatting.
+- src/.gitignore contains exclusions for .NET/C#, JetBrains Rider, Visual Studio Code, Visual Studio and operating systems. It was generated from [Toptal/gitignore.io](https://www.toptal.com/developers/gitignore/api/rider,visualstudio,visualstudiocode,csharp,dotnetcore,windows,linux,macos). The service provides the generic VisualStudio template for Visual Studio 2026.
+- tests/fixtures/ and tests/results/ at the repository root contain harness inputs and evidence, not test projects.
+- docs/ contains documentation and docs/requirements/ contains requirement records. Private samples remain outside the source tree and are ignored under samples/.
 
-Desde la raíz:
+From the repository root:
 
 ```powershell
 cd src
@@ -47,4 +47,4 @@ dotnet test
 dotnet run --project DocuNet.Cli -- --help
 ```
 
-Mantenga esta estructura al agregar proyectos o modificar las instrucciones de desarrollo.
+Keep this structure when adding projects or changing development instructions.

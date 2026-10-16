@@ -1,117 +1,117 @@
-# Hoja de ruta
+# Roadmap
 
-Estas líneas describen mejoras propuestas. No representan funciones disponibles ni fechas de entrega comprometidas.
+These items describe proposed improvements. They do not represent available features or committed delivery dates.
 
-## Prioridad y orden de ejecución
+## Priority and execution order
 
-Priorizar la funcionalidad del CLI y la utilidad del sitio generado. Abordar la distribución y la instalación después de estabilizar las opciones, las plantillas y la gestión de recursos.
+Prioritize CLI functionality and the usefulness of the generated site. Address distribution and installation after stabilizing options, templates and resource management.
 
-| Orden | Incidentes | Resultado esperado y dependencias |
+| Order | Issues | Expected outcome and dependencies |
 | --- | --- | --- |
-| 1 | Modernización de parámetros y ayuda del CLI | Mejorar el uso del CLI y preparar la incorporación consistente de las opciones de framework visual y recursos. |
-| 2 | Dependencias CSS y JavaScript: CDN o archivos locales | Definir cómo declarar, resolver y publicar los recursos que utilizarán las nuevas plantillas. |
-| 3 | Presentación y navegación; Bootstrap y Tailwind CSS; renovación de JavaScript y recursos heredados | Ejecutar estos incidentes de forma coordinada para modernizar la experiencia de consulta y evitar rehacer navegación y estilos. |
-| 4 | Gestión de plantillas personalizadas | Definir su personalización, compatibilidad y conservación durante actualizaciones a partir de las nuevas plantillas. |
-| 5 | Distribución por plataforma y arquitectura, incluido macOS | Empaquetar y validar la herramienta con opciones y estructura de recursos consolidadas. |
-| 6 | Instalación de Windows mediante WinGet | Utilizar los paquetes de Windows y las políticas de actualización y conservación de archivos definidas previamente. |
+| 1 | CLI parameter and help modernization | Improve CLI usability and prepare consistent options for visual frameworks and resources. |
+| 2 | CSS and JavaScript dependencies: CDN or local files | Define how to declare, resolve and publish resources for the new templates. |
+| 3 | Presentation and navigation; Bootstrap and Tailwind CSS; JavaScript and legacy resource modernization | Coordinate these issues to modernize the documentation experience and avoid reworking navigation and styles. |
+| 4 | Custom template management | Define customization, compatibility and preservation during upgrades based on the new templates. |
+| 5 | Distribution by platform and architecture, including macOS | Package and validate the tool with established options and resource structure. |
+| 6 | Windows installation through WinGet | Use the Windows packages and previously defined update and file preservation policies. |
 
-Definir el diseño y la navegación deseados al comenzar la ejecución del roadmap, aunque su implementación corresponda al bloque 3. Este diseño inicial orientará las decisiones sobre recursos del bloque 2.
+Define the desired design and navigation when roadmap execution begins, even though implementation belongs to phase 3. This initial design will guide resource decisions in phase 2.
 
-Entregar la modernización visual por incrementos: acordar una navegación común, implementar una variante de las plantillas y después la segunda. El bloque 3 se completará con soporte para Bootstrap y Tailwind CSS seleccionable por el usuario, con las mismas funciones y contenido y con el JavaScript heredado renovado conforme al diseño.
+Deliver visual modernization incrementally: agree on shared navigation, implement one template variant and then the second. Phase 3 is complete when users can select either Bootstrap or Tailwind CSS with the same features and content, and legacy JavaScript has been modernized according to the design.
 
-Crear los incidentes de actualización de Bootstrap, Tailwind CSS y sus dependencias al completar su integración. Revisarlos en cada futura versión del CLI.
+Create follow-up issues for Bootstrap, Tailwind CSS and dependency updates when integration is complete. Review them for every future CLI release.
 
-## Modernización de parámetros y ayuda del CLI
+## CLI parameter and help modernization
 
-Modernizar la presentación de los parámetros, la ayuda y el procesamiento de argumentos mediante bibliotecas NuGet mantenidas y compatibles con .NET 10. Seleccionar las bibliotecas durante el análisis del incidente, considerando su mantenimiento, licencia, dependencias y compatibilidad con la distribución por plataforma y arquitectura.
+Modernize parameter presentation, help and argument processing using maintained NuGet libraries compatible with .NET 10. Select libraries during issue analysis, considering maintenance, licensing, dependencies and compatibility with distribution by platform and architecture.
 
-Alcance propuesto:
+Proposed scope:
 
-- Sustituir el procesamiento manual de argumentos por una biblioteca que permita declarar opciones, tipos, valores predeterminados, parámetros obligatorios y reglas de validación de forma consistente.
-- Generar la ayuda desde la definición de los parámetros para mantener sincronizados nombres, descripciones, valores permitidos y ejemplos de uso. Mejorar la legibilidad de `--help` y la presentación de opciones y errores.
-- Presentar diagnósticos claros para opciones desconocidas, valores ausentes o inválidos y combinaciones incompatibles, con códigos de salida estables para automatización.
-- Evaluar una biblioteca de presentación de consola para mejorar el formato, adaptándose al ancho de la terminal y permitiendo salida legible sin colores ni secuencias de control cuando se redirige a archivos o se ejecuta en CI.
-- Conservar la compatibilidad de los comandos y parámetros existentes; documentar cualquier cambio necesario y su migración para los scripts de los usuarios.
-- Cubrir con pruebas xUnit el procesamiento, la validación, la ayuda y los códigos de salida, incluidos argumentos entre comillas, rutas con espacios y ejecución en las plataformas soportadas. Usar NSubstitute cuando se requieran mocks.
-- Actualizar la documentación y los ejemplos de uso con el contrato final del CLI.
+- Replace manual argument processing with a library that consistently declares options, types, defaults, required parameters and validation rules.
+- Generate help from parameter definitions to keep names, descriptions, allowed values and usage examples synchronized. Improve --help readability and the presentation of options and errors.
+- Provide clear diagnostics for unknown options, missing or invalid values and incompatible combinations, with stable exit codes for automation.
+- Evaluate a console presentation library to improve formatting, adapt to terminal width and provide readable output without colors or control sequences when redirected to files or run in CI.
+- Preserve compatibility with existing commands and parameters; document any necessary changes and migration steps for user scripts.
+- Cover processing, validation, help and exit codes with xUnit tests, including quoted arguments, paths with spaces and execution on supported platforms. Use NSubstitute when mocks are needed.
+- Update documentation and usage examples to match the final CLI contract.
 
-## Dependencias CSS y JavaScript: CDN o archivos locales
+## CSS and JavaScript dependencies: CDN or local files
 
-Permitir que las plantillas utilicen las dependencias CSS y JavaScript desde CDN oficiales o recomendados por sus proyectos, o que sus archivos se copien dentro del sitio generado. Definir cómo seleccionar el modo de recursos durante la generación y cómo declararlo en las plantillas.
+Allow templates to use CSS and JavaScript dependencies from their projects' official or recommended CDNs, or copy their files into the generated site. Define how to select the resource mode during generation and declare it in templates.
 
-Alcance propuesto:
+Proposed scope:
 
-- Ofrecer un modo CDN, con referencias HTTPS a versiones explícitas de las dependencias, y un modo local, con archivos copiados al sitio y enlaces relativos para su publicación estática y consulta sin conexión.
-- Identificar los CDN oficiales o recomendados de cada dependencia; cuando no exista una fuente adecuada, conservar la alternativa local. Evitar referencias a versiones flotantes.
-- Mantener las versiones de CSS y JavaScript equivalentes entre ambos modos y contemplar los recursos asociados que necesiten, como fuentes e imágenes.
-- Evaluar integridad de subrecursos (SRI), configuración de `crossorigin` y compatibilidad con políticas CSP para las referencias externas, según lo admitido por cada proveedor.
-- Definir el modo predeterminado y documentar los requisitos de conexión tanto para generar como para consultar el sitio. Determinar si los recursos locales se distribuyen con las plantillas o se obtienen durante la generación.
-- Conservar las licencias y avisos de terceros correspondientes en ambos modos y copiar únicamente los recursos necesarios para el modo seleccionado.
-- Verificar generación repetible, enlaces y navegación en ambos modos; comprobar el funcionamiento sin conexión del modo local y documentar el comportamiento del modo CDN cuando sus recursos no estén disponibles.
+- Offer a CDN mode with HTTPS references to explicit dependency versions, and a local mode with files copied into the site and relative links for static publishing and offline browsing.
+- Identify official or recommended CDNs for each dependency; where no suitable source exists, retain the local alternative. Avoid references to floating versions.
+- Keep CSS and JavaScript versions equivalent between modes and account for required related resources, such as fonts and images.
+- Evaluate subresource integrity (SRI), crossorigin settings and CSP compatibility for external references, as supported by each provider.
+- Define the default mode and document connection requirements for both generation and browsing. Determine whether local resources ship with templates or are obtained during generation.
+- Preserve the corresponding third-party licenses and notices in both modes, and copy only resources required by the selected mode.
+- Verify repeatable generation, links and navigation in both modes; check offline operation in local mode and document CDN mode behavior when its resources are unavailable.
 
-Coordinar este incidente con la renovación de JavaScript y recursos heredados, y con la gestión de plantillas personalizadas.
+Coordinate this issue with JavaScript and legacy resource modernization and custom template management.
 
-## Presentación y navegación
+## Presentation and navigation
 
-Evolucionar las plantillas externas hacia una presentación moderna, responsive y orientada al desarrollador que consulta una API:
+Evolve external templates toward a modern, responsive presentation for developers browsing an API:
 
-- Lectura cómoda en escritorio, tablet y móvil, incluidas firmas largas y ejemplos de código.
-- Navegación por namespaces, tipos y miembros, con contexto de ubicación y enlaces directos a sobrecargas.
-- Búsqueda y filtrado en el sitio estático, conservando el contexto durante la navegación.
-- Acceso por teclado, foco visible, contraste y estructura semántica.
-- Renovación de recursos heredados conforme al diseño.
-- Pruebas visuales, de viewport y de accesibilidad.
+- Comfortable reading on desktop, tablet and mobile, including long signatures and code examples.
+- Navigation by namespace, type and member, with location context and direct links to overloads.
+- Search and filtering within the static site, preserving context during navigation.
+- Keyboard access, visible focus, contrast and semantic structure.
+- Legacy resource modernization according to the design.
+- Visual, viewport and accessibility tests.
 
-Mantener separado el modelo de documentación de su presentación. El nuevo diseño debe preservar contenido, identificadores y destinos de enlaces, sin quedar ligado a snapshots de las plantillas actuales.
+Keep the documentation model separate from presentation. The new design must preserve content, identifiers and link targets without being tied to snapshots of current templates.
 
-## Bootstrap y Tailwind CSS en las plantillas estándar
+## Bootstrap and Tailwind CSS in standard templates
 
-Incorporar soporte para Bootstrap y Tailwind CSS mediante variantes de las plantillas estándar, para mejorar la apariencia visual, la consistencia y la adaptación a distintos tamaños de pantalla del sitio generado. El usuario podrá elegir cuál de los dos frameworks utilizar al generar el sitio; el CLI deberá soportar ambos y documentar la opción de selección y su valor predeterminado.
+Support Bootstrap and Tailwind CSS through standard template variants to improve visual appearance, consistency and adaptation to different screen sizes. Users must be able to choose which framework to use when generating the site; the CLI must support both and document the selection option and its default value.
 
-Alcance propuesto:
+Proposed scope:
 
-- Utilizar la versión estable más reciente de cada framework disponible al implementar y completar este requerimiento. Verificar las versiones en sus fuentes oficiales y registrar las versiones concretas soportadas por la entrega del CLI.
-- Modernizar con ambas variantes la estructura visual de las páginas de namespaces, tipos y miembros, con estilos coherentes para navegación, tablas, firmas, ejemplos de código y búsqueda, manteniendo las mismas funciones y contenido.
-- Integrar los componentes de Bootstrap y los estilos utilitarios de Tailwind CSS, junto con los componentes adicionales que se requieran para cada variante; definir sus dependencias CSS y JavaScript y publicar únicamente los recursos de la variante seleccionada.
-- Mantener las plantillas externas y editables, y documentar cómo seleccionar el framework y personalizar estilos y componentes sin modificar el ejecutable.
-- Definir cómo generar y distribuir los estilos finales de cada variante. Si se requiere compilar recursos, evaluar hacerlo al preparar las plantillas estándar y documentar el proceso para quienes las personalicen.
-- Coordinar la entrega de recursos con el incidente de CDN o archivos locales, según las capacidades de cada framework, y evitar incluir dependencias o estilos sin uso.
-- Preservar el contenido, los identificadores de miembros, los enlaces relativos y la navegación del sitio; validar ambas variantes en escritorio, tablet y móvil, así como teclado y accesibilidad.
-- Incorporar ejemplos y comprobaciones visuales para ambas variantes que permitan revisar el resultado y detectar regresiones en las plantillas estándar.
-- Crear incidentes de seguimiento para mantener Bootstrap, Tailwind CSS y sus dependencias actualizados en futuras versiones del CLI. Cada actualización deberá revisar versiones estables disponibles, compatibilidad y migraciones de plantillas personalizadas, licencias y regresiones visuales y funcionales; documentar las versiones adoptadas en cada entrega.
+- Use the latest stable version of each framework available when implementing and completing this requirement. Verify versions against official sources and record the specific versions supported by the CLI release.
+- Modernize the visual structure of namespace, type and member pages in both variants, with consistent styles for navigation, tables, signatures, code examples and search, preserving the same features and content.
+- Integrate Bootstrap components and Tailwind CSS utility styles, together with any additional components required by each variant; define their CSS and JavaScript dependencies and publish only the selected variant's resources.
+- Keep templates external and editable, and document framework selection and style/component customization without modifying the executable.
+- Define how to generate and distribute each variant's final styles. If resource compilation is required, evaluate doing it when preparing standard templates and document the process for users customizing them.
+- Coordinate resource delivery with the CDN or local files issue, according to each framework's capabilities, and avoid including unused dependencies or styles.
+- Preserve content, member identifiers, relative links and site navigation; validate both variants on desktop, tablet and mobile, including keyboard use and accessibility.
+- Add examples and visual checks for both variants to review results and detect regressions in standard templates.
+- Create follow-up issues to keep Bootstrap, Tailwind CSS and their dependencies updated in future CLI releases. Each update must review available stable versions, compatibility and custom template migrations, licenses, and visual and functional regressions; document the versions adopted in each release.
 
-Este incidente forma parte de la modernización de presentación y navegación y debe coordinarse con la renovación de los recursos JavaScript heredados.
+This issue is part of presentation and navigation modernization and must be coordinated with legacy JavaScript resource modernization.
 
-## Renovación de JavaScript y recursos heredados
+## JavaScript and legacy resource modernization
 
-Las plantillas actuales incluyen jQuery 1.3.2 (con Sizzle) y jQuery.ScrollTo 1.4.2. Se conservan por compatibilidad; su actualización no está implementada ni se presenta como resuelta.
+Current templates include jQuery 1.3.2 (with Sizzle) and jQuery.ScrollTo 1.4.2. They are retained for compatibility; their update is not implemented or presented as resolved.
 
-Como parte de la modernización:
+As part of modernization:
 
-- Evaluar sustituir las funciones usadas por APIs nativas del navegador o dependencias mantenidas.
-- Revisar avisos de seguridad y eliminar bibliotecas o funciones que no sean necesarias.
-- Preservar navegación, desplazamiento, ejemplos de código y enlaces directos.
-- Probar tamaños de pantalla, teclado, foco, historial y funcionamiento sin backend.
-- Actualizar avisos/licencias y validar los sitios generados antes de retirar los recursos actuales.
+- Evaluate replacing used functionality with native browser APIs or maintained dependencies.
+- Review security advisories and remove unnecessary libraries or functions.
+- Preserve navigation, scrolling, code examples and direct links.
+- Test screen sizes, keyboard use, focus, history and operation without a backend.
+- Update notices/licenses and validate generated sites before removing current resources.
 
-La renovación del diseño y de JavaScript debe tratarse como una mejora con regresiones de comportamiento; no se realizará como una actualización automática de paquetes.
+Design and JavaScript modernization must be treated as an improvement requiring behavioral regression checks; it will not be performed as an automatic package update.
 
-## Gestión de plantillas personalizadas
+## Custom template management
 
-Definir en un incidente independiente cómo administrar las plantillas modificadas o creadas por el usuario durante la instalación, actualización y desinstalación del CLI, para todos los métodos de distribución.
+Define in a separate issue how to manage user-modified or user-created templates during CLI installation, upgrade and uninstallation, for all distribution methods.
 
-Decisiones pendientes:
+Open decisions:
 
-- Determinar dónde guardar las plantillas personalizadas y cómo distinguirlas de las plantillas incluidas en la distribución, conservando la selección mediante `--templates`.
-- Definir cómo incorporar mejoras de las plantillas predeterminadas sin sobrescribir personalizaciones y cómo informar incompatibilidades entre versiones.
-- Establecer qué se conserva al desinstalar y cómo permitir que el usuario elimine explícitamente sus personalizaciones.
-- Documentar el flujo acordado y comprobar que las actualizaciones preserven las modificaciones del usuario.
+- Determine where to store custom templates and how to distinguish them from distributed templates, preserving selection through --templates.
+- Define how to incorporate default template improvements without overwriting customizations and how to report version incompatibilities.
+- Establish what is preserved during uninstallation and how users can explicitly delete their customizations.
+- Document the agreed workflow and verify that upgrades preserve user changes.
 
-## Distribución por plataforma y arquitectura
+## Distribution by platform and architecture
 
-Evaluar paquetes o instaladores diferenciados para Windows y Linux en x64 y ARM64. Este mismo trabajo incorporará el soporte de macOS en Intel y Apple Silicon, con publicación y validación propias. Cada combinación de sistema operativo y arquitectura requiere un artefacto específico.
+Evaluate separate packages or installers for Windows and Linux on x64 and ARM64. This work will also introduce macOS support on Intel and Apple Silicon, with its own publishing and validation. Each operating system and architecture combination requires a specific artifact.
 
-| Variante propuesta | Runtime identifier |
+| Proposed variant | Runtime identifier |
 | --- | --- |
 | Windows x64 | win-x64 |
 | Linux x64 | linux-x64 |
@@ -120,35 +120,35 @@ Evaluar paquetes o instaladores diferenciados para Windows y Linux en x64 y ARM6
 | macOS Intel | osx-x64 |
 | macOS Apple Silicon | osx-arm64 |
 
-Mantener una única solución y código fuente; variar la publicación, el empaquetado y las pruebas por destino.
+Keep a single solution and codebase; vary publishing, packaging and testing by target.
 
-El soporte de macOS se abordará dentro de esta iniciativa de distribución. Su implementación, validación e incorporación a CI no son una tarea previa ni un requisito para las mejoras anteriores del roadmap. Hasta completar este trabajo, el soporte validado se limita a Windows y Linux.
+Address macOS support within this distribution initiative. Its implementation, validation and CI integration are neither a prerequisite nor a requirement for earlier roadmap improvements. Until this work is complete, validated support is limited to Windows and Linux.
 
-Requisitos y opciones a evaluar:
+Requirements and options to evaluate:
 
-- **Incluir siempre las referencias de .NET Framework 4.8** en ReferenceAssemblies/net48 para todos los destinos, incluidos Linux, Windows ARM64 y macOS. Permiten interpretar bibliotecas Framework sin ejecutar sus ensamblados y no deben confundirse con el runtime del CLI.
-- **Conservar Templates como carpeta externa y editable**, con sus plantillas y recursos, para personalizar la presentación sin cambiar ni recompilar el ejecutable. Mantener --templates para seleccionar otra ubicación.
-- **Evaluar agrupar las DLL de ejecución referenciadas** mediante publicación single-file. Es empaquetado de dependencias, no fusión de sus assemblies; la compatibilidad debe comprobarse antes de adoptarlo.
-- **Preferir, si es viable, una distribución sin el runtime de .NET 10 incluido**: publicación framework-dependent, SelfContained=false. Esto exige instalar previamente el runtime de .NET 10 adecuado al sistema y arquitectura; no requiere el SDK para usar la CLI.
-- Comprobar especialmente Spark/Roslyn, compilación dinámica de plantillas y lectura de metadatos. Si necesitan referencias físicas, definir qué archivos deben permanecer externos o extraerse; no asumir que activar single-file basta.
-- Conservar licencias y avisos de terceros en cada paquete y verificar rutas, permisos, funcionamiento sin conexión y generación con entradas Framework y modernas.
-- Probar el ejecutable publicado en cada destino y automatizar los archivos descargables y sus comprobaciones en CI. No contar compilación cruzada como ejecución validada.
-- Implementar y validar macOS en este mismo trabajo: restauración, compilación, suite, cobertura y generación con fixtures propios en Intel y Apple Silicon. Comprobar rutas, mayúsculas/minúsculas, permisos, recursos, enlaces y referencias net48; registrar versión del sistema, arquitectura y SDK/runtime. Incorporar sus jobs de CI y anunciar soporte solo después de la validación correspondiente.
+- **Always include .NET Framework 4.8 references** under ReferenceAssemblies/net48 for every target, including Linux, Windows ARM64 and macOS. They allow Framework libraries to be interpreted without executing their assemblies and must not be confused with the CLI runtime.
+- **Keep Templates as an external, editable directory**, with its templates and resources, to customize presentation without changing or recompiling the executable. Retain --templates to select another location.
+- **Evaluate bundling referenced runtime DLLs** through single-file publishing. This packages dependencies rather than merging their assemblies; compatibility must be verified before adoption.
+- **Prefer distribution without the .NET 10 runtime included, if feasible**: framework-dependent publishing, SelfContained=false. This requires the appropriate .NET 10 runtime to be installed for the system and architecture; using the CLI does not require the SDK.
+- Pay particular attention to Spark/Roslyn, dynamic template compilation and metadata reading. If they require physical references, define which files must remain external or be extracted; do not assume enabling single-file is sufficient.
+- Preserve third-party licenses and notices in every package, and verify paths, permissions, offline operation and generation with Framework and modern inputs.
+- Test the published executable on each target and automate downloadable artifacts and their checks in CI. Do not count cross-compilation as validated execution.
+- Implement and validate macOS within this work: restore, build, tests, coverage and generation using project-owned fixtures on Intel and Apple Silicon. Check paths, case sensitivity, permissions, resources, links and net48 references; record OS version, architecture and SDK/runtime. Add CI jobs and announce support only after corresponding validation.
 
-La evaluación deberá comparar tamaño, requisitos de instalación y experiencia de uso. El agrupamiento de dependencias y la exclusión del runtime son objetivos sujetos a compatibilidad; las referencias net48 y la personalización externa de Templates se conservan.
+The evaluation must compare size, installation requirements and user experience. Dependency bundling and runtime exclusion are compatibility-dependent goals; net48 references and external Templates customization are retained.
 
-Referencia: [publicación single-file de .NET](https://learn.microsoft.com/en-us/dotnet/core/deploying/single-file/overview).
+Reference: [.NET single-file publishing](https://learn.microsoft.com/en-us/dotnet/core/deploying/single-file/overview).
 
-## Instalación de Windows mediante WinGet
+## Windows installation through WinGet
 
-Preparar la distribución para instalar DocuNet con WinGet en Windows x64 y ARM64:
+Prepare distribution so DocuNet can be installed through WinGet on Windows x64 and ARM64:
 
-- Publicar los paquetes y manifiestos necesarios para su incorporación al catálogo de WinGet, con identificador estable, versiones, URLs de descarga, hashes y metadatos de licencia.
-- Admitir instalación en modo usuario (`winget install --id <identificador-del-paquete> --exact --scope user`), sin requerir permisos de administrador. El identificador se definirá al preparar la publicación.
-- Registrar el comando `docunet` en el `PATH` del usuario, directamente o mediante el mecanismo de alias de WinGet que corresponda al paquete, para ejecutarlo desde cualquier carpeta. Preservar las entradas existentes del `PATH` y documentar cuándo es necesario abrir una terminal nueva.
-- Instalar el paquete completo, incluidas las referencias `ReferenceAssemblies/net48`, la carpeta externa `Templates` y las licencias. Resolver sus rutas con independencia del directorio de trabajo del usuario.
-- Definir y comprobar cómo satisfacer el requisito del runtime de .NET 10 si se mantiene la distribución framework-dependent, sin incorporar el runtime al paquete ni asumir que instalar sus prerrequisitos admite siempre el modo usuario.
-- Validar los manifiestos con `winget validate` y probar instalación, actualización y desinstalación en cuentas sin privilegios, para ambas arquitecturas. Verificar el comando desde PowerShell y CMD en carpetas distintas a la de instalación, incluidas rutas con espacios.
-- Hacer que la actualización y la desinstalación gestionen únicamente las entradas de `PATH`, alias y archivos propios. La política para las plantillas personalizadas se definirá en el incidente [Gestión de plantillas personalizadas](#gestión-de-plantillas-personalizadas).
+- Publish the packages and manifests needed for inclusion in the WinGet catalog, with a stable identifier, versions, download URLs, hashes and license metadata.
+- Support per-user installation (`winget install --id <package-identifier> --exact --scope user`) without administrator permissions. Define the identifier when preparing publication.
+- Register the docunet command in the user's PATH, directly or through the appropriate WinGet package alias mechanism, so it can run from any directory. Preserve existing PATH entries and document when a new terminal must be opened.
+- Install the complete package, including ReferenceAssemblies/net48 references, the external Templates directory and licenses. Resolve their paths independently of the user's working directory.
+- Define and verify how to satisfy the .NET 10 runtime requirement if distribution remains framework-dependent, without bundling the runtime or assuming prerequisite installation always supports user scope.
+- Validate manifests with winget validate and test installation, upgrade and uninstallation under unprivileged accounts for both architectures. Check the command from PowerShell and CMD in directories other than the installation directory, including paths with spaces.
+- Ensure upgrade and uninstallation manage only the package's own PATH entries, aliases and files. Define the custom template policy in the [Custom template management](#custom-template-management) issue.
 
-Referencias: [instalación con WinGet y selección de ámbito](https://learn.microsoft.com/en-us/windows/package-manager/winget/install) y [manifiestos de paquetes](https://learn.microsoft.com/en-us/windows/package-manager/package/manifest).
+References: [WinGet installation and scope selection](https://learn.microsoft.com/en-us/windows/package-manager/winget/install) and [package manifests](https://learn.microsoft.com/en-us/windows/package-manager/package/manifest).

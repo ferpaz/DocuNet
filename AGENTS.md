@@ -1,30 +1,30 @@
 # Repository Guidelines
 
-## Propósito y arquitectura
+## Purpose and architecture
 
-DocuNet es un CLI de .NET 10 que genera documentación HTML estática desde ensamblados .NET Framework o .NET moderno y sus comentarios XML. El soporte validado actual cubre Windows y Linux.
+DocuNet is a .NET 10 CLI that generates static HTML documentation from .NET Framework or modern .NET assemblies and their XML comments. Currently validated support covers Windows and Linux.
 
-Separe lectura de metadatos, interpretación XML, modelo de documentación y presentación. Inspeccione ensamblados sin ejecutar su código ni constructores de atributos. Conserve identificadores XML completos para resolver miembros, referencias y sobrecargas.
+Separate metadata reading, XML parsing, the documentation model and presentation. Inspect assemblies without executing their code or attribute constructors. Preserve complete XML identifiers to resolve members, references and overloads.
 
-El contrato actual acepta ensamblados/XML, --output y --templates. No añadir parámetros obligatorios de un producto específico, integración Git, backend o despliegue sin definir antes el cambio de alcance.
+The current contract accepts assemblies/XML, --output and --templates. Do not add mandatory product-specific parameters, Git integration, a backend or deployment without first defining the scope change.
 
-## Estructura
+## Structure
 
-Mantenga solución, proyectos y configuración de desarrollo dentro de src:
+Keep the solution, projects and development configuration inside src:
 
-- DocuNet.Cli: argumentos y diagnósticos.
-- DocuNet.Core: lectura DLL/XML y modelo.
-- DocuNet.Rendering: plantillas y generación de archivos estáticos.
-- tests/DocuNet.Tests: pruebas xUnit.
-- tests/DocuNet.TestFixtures: ensamblados sintéticos compilables.
+- DocuNet.Cli: arguments and diagnostics.
+- DocuNet.Core: DLL/XML reading and model.
+- DocuNet.Rendering: templates and static file generation.
+- tests/DocuNet.Tests: xUnit tests.
+- tests/DocuNet.TestFixtures: buildable synthetic assemblies.
 
-Documentación pública en docs; datos adicionales de pruebas en tests/fixtures y resultados regenerables en tests/results. Los archivos históricos locales de análisis/requerimientos y las muestras privadas están ignorados; no son necesarios para contribuir.
+Public documentation belongs in docs; additional test data in tests/fixtures and regenerable results in tests/results. Local historical analysis/requirement records and private samples are ignored; they are not required to contribute.
 
-Consulte [organización del código](docs/source-layout.md). No incluir DLL privadas, credenciales, documentación sensible ni salidas de compilación en commits.
+See [source layout](docs/source-layout.md). Do not commit private DLLs, credentials, sensitive documentation or build output.
 
-## Desarrollo
+## Development
 
-Ejecute desde src para aplicar global.json:
+Run from src to apply global.json:
 
 ```shell
 dotnet restore --locked-mode
@@ -33,22 +33,24 @@ dotnet test
 dotnet run --project DocuNet.Cli -- --help
 ```
 
-Use C#, cuatro espacios, referencias anulables, PascalCase para tipos/miembros públicos y camelCase para parámetros/variables. Respete .editorconfig y las APIs de rutas multiplataforma.
+Use C#, four spaces, nullable reference types, PascalCase for public types/members and camelCase for parameters/variables. Follow .editorconfig and use cross-platform path APIs.
 
-## Pruebas y archivos
+## Tests and files
 
-Use xUnit.net y NSubstitute para colaboradores simulados; fixtures y archivos reales para comprobar metadatos y renderizado. Mantenga al menos 90% de líneas y 80% de ramas por proyecto de producción; consulte [pruebas](docs/testing.md).
+Use xUnit.net and NSubstitute for simulated collaborators; use real fixtures and files to verify metadata and rendering. Maintain at least 90% line coverage and 80% branch coverage per production project; see [testing](docs/testing.md).
 
-Cubra genéricos, sobrecargas, XML ausente/inválido, dependencias faltantes, escape HTML y destinos de enlaces. Verifique regeneración determinista y conservación de archivos ajenos o modificados manualmente. No escriba fuera del destino solicitado ni modifique muestras originales.
+Cover generics, overloads, missing/invalid XML, missing dependencies, HTML escaping and link targets. Verify deterministic regeneration and preservation of unrelated or manually modified files. Do not write outside the requested destination or modify original samples.
 
-## Presentación y licencias
+## Presentation and licenses
 
-Las plantillas son código C# de confianza y deben permanecer editables externamente. Nuevas plantillas deben preservar IDs/contenido y probar navegación, responsive y accesibilidad. jQuery y el diseño heredado se modernizarán según la [hoja de ruta](docs/roadmap.md).
+Templates are trusted C# code and must remain externally editable. New templates must preserve IDs/content and be tested for navigation, responsive behavior and accessibility. jQuery and the legacy design will be modernized according to the [roadmap](docs/roadmap.md).
 
-Conserve el crédito a Docu y los avisos de terceros. Si cambia dependencias o recursos copiados, actualice [avisos](THIRD-PARTY-NOTICES.md) y las licencias que se distribuyen con el CLI y el sitio. La licencia MIT de DocuNet no reemplaza licencias de terceros.
+Preserve Docu attribution and third-party notices. If dependencies or copied resources change, update [notices](THIRD-PARTY-NOTICES.md) and the licenses distributed with the CLI and site. DocuNet's MIT license does not replace third-party licenses.
 
-## Colaboración
+## Collaboration
 
-Siga [CONTRIBUTING.md](CONTRIBUTING.md) y [SECURITY.md](SECURITY.md). Use GitHub Issues para errores/propuestas y vincule PR cuando corresponda. Los mensajes de commit deben describir el cambio; no exija códigos de expedientes locales.
+Follow [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Use GitHub Issues for bugs/proposals and link PRs when appropriate. Commit messages must describe the change; do not require local requirement record codes.
 
-Para cambios importantes, acuerde alcance y criterios antes de implementar. Describa cambios y validación; adjunte capturas para presentación. No haga push, publique ni despliegue sin autorización. El protocolo local de IA de docs/harness solo se aplica cuando se solicita expresamente; no es un requisito para contribuciones públicas.
+Write public documentation and new explanatory text in English. Preserve original third-party license and attribution text.
+
+For significant changes, agree on scope and criteria before implementing. Describe changes and validation; attach screenshots for presentation changes. Do not push, publish or deploy without authorization. The local AI protocol in docs/harness applies only when explicitly requested; it is not required for public contributions.

@@ -1,29 +1,29 @@
 # DocuNet
 
-Genera documentación HTML estática para bibliotecas .NET a partir de sus ensamblados y comentarios XML.
+Generate static HTML documentation for .NET libraries from their assemblies and XML comments.
 
-DocuNet es una herramienta de línea de comandos escrita en C# y .NET 10. Lee metadatos sin ejecutar el código del ensamblado documentado. El sitio resultante puede consultarse localmente o publicarse en un alojamiento estático, sin backend.
+DocuNet is a command-line tool written in C# and .NET 10. It reads metadata without executing the documented assembly's code. The resulting site can be browsed locally or published to static hosting, with no backend.
 
-[Ver demo: publicación y ejemplo local](docs/demo.md) — demo sintética preparada para GitHub Pages; la URL pública estará disponible después del primer despliegue.
+[View the demo: publishing and local example](docs/demo.md) — a synthetic demo prepared for GitHub Pages; the public URL will be available after the first deployment.
 
-## Características
+## Features
 
-- Documenta tipos y miembros públicos: propiedades, campos, métodos y eventos, incluidos miembros heredados.
-- Conserva identificadores XML para genéricos, sobrecargas y referencias entre miembros.
-- Admite entradas DLL/EXE de .NET Framework y .NET moderno.
-- Genera enlaces relativos y anclas únicas para las sobrecargas.
-- Permite personalizar HTML, CSS y JavaScript mediante plantillas Spark externas, sin recompilar.
-- Regenera archivos administrados y protege archivos ajenos o modificados manualmente.
+- Documents public types and members: properties, fields, methods and events, including inherited members.
+- Preserves XML identifiers for generics, overloads and references between members.
+- Accepts .NET Framework and modern .NET DLL/EXE inputs.
+- Generates relative links and unique anchors for overloads.
+- Supports HTML, CSS and JavaScript customization through external Spark templates, without recompiling.
+- Regenerates managed files while protecting unrelated files and manual changes.
 
-## Requisitos
+## Requirements
 
-- SDK de .NET 10 compatible con [src/global.json](src/global.json).
-- DLL o EXE administrado y su archivo de documentación XML.
-- Dependencias necesarias para resolver clases base, junto al ensamblado de entrada.
+- A .NET 10 SDK compatible with [src/global.json](src/global.json).
+- A managed DLL or EXE and its XML documentation file.
+- Dependencies required to resolve base classes, alongside the input assembly.
 
-La herramienta se ha probado en Windows y Linux. Las ampliaciones de plataforma se describen en la [hoja de ruta](docs/roadmap.md#distribución-por-plataforma-y-arquitectura).
+The tool has been tested on Windows and Linux. Planned platform support is described in the [roadmap](docs/roadmap.md#distribution-by-platform-and-architecture).
 
-Para producir XML desde un proyecto C#, habilite esta propiedad:
+To produce XML documentation from a C# project, enable this property:
 
 ```xml
 <PropertyGroup>
@@ -31,11 +31,11 @@ Para producir XML desde un proyecto C#, habilite esta propiedad:
 </PropertyGroup>
 ```
 
-No es necesario proporcionar PDB.
+PDB files are not required.
 
-## Compilar y probar
+## Build and test
 
-Desde una copia local del repositorio:
+From a local copy of the repository:
 
 ```shell
 cd src
@@ -45,87 +45,87 @@ dotnet test
 dotnet run --project DocuNet.Cli -- --help
 ```
 
-La solución y todos los proyectos están bajo src. Las pruebas usan xUnit.net y NSubstitute y no necesitan ensamblados privados.
+The solution and all projects are under src. Tests use xUnit.net and NSubstitute and do not require private assemblies.
 
-## Inicio rápido
+## Quick start
 
-Después de compilar, puede generar un sitio de ejemplo usando el fixture incluido. Ejecute desde src:
+After building, generate a sample site using the included fixture. Run from src:
 
 ```shell
 dotnet run --no-build --project DocuNet.Cli -- --output=../output/demo tests/DocuNet.TestFixtures/bin/Debug/net10.0/DocuNet.TestFixtures.dll
 ```
 
-Abra output/demo/index.htm desde la raíz del repositorio.
+Open output/demo/index.htm from the repository root.
 
-Para documentar su biblioteca:
-
-```shell
-dotnet run --project DocuNet.Cli -- --output=../output/library "/ruta/MiBiblioteca.dll"
-```
-
-Si no especifica archivos XML, DocuNet busca un compañero con el mismo nombre que cada ensamblado. También puede proporcionarlos explícitamente:
+To document your library:
 
 ```shell
-dotnet run --project DocuNet.Cli -- --output=../output/library "/ruta/MiBiblioteca.dll" "/ruta/MiBiblioteca.xml"
+dotnet run --project DocuNet.Cli -- --output=../output/library "/path/MyLibrary.dll"
 ```
 
-Las rutas relativas se resuelven desde el directorio actual. Sustituya las rutas de los ejemplos por las de su equipo.
+If you do not specify XML files, DocuNet looks for a companion file with the same name as each assembly. You can also provide them explicitly:
 
-## Opciones del CLI
+```shell
+dotnet run --project DocuNet.Cli -- --output=../output/library "/path/MyLibrary.dll" "/path/MyLibrary.xml"
+```
 
-| Opción o entrada | Comportamiento |
+Relative paths are resolved from the current directory. Replace the example paths with paths on your machine.
+
+## CLI options
+
+| Option or input | Behavior |
 | --- | --- |
-| --help | Muestra la ayuda |
-| --output=path | Directorio de salida; predeterminado: ./output |
-| --templates=path | Directorio de plantillas; predeterminado: Templates junto al ejecutable |
-| assembly.dll / assembly.exe | Uno o varios ensamblados administrados |
-| documentation.xml | Uno o varios archivos XML de documentación |
-| Patrones * y ? | Seleccionan archivos de entrada; use comillas para que los procese el CLI |
+| --help | Displays help |
+| --output=path | Output directory; default: ./output |
+| --templates=path | Template directory; default: Templates alongside the executable |
+| assembly.dll / assembly.exe | One or more managed assemblies |
+| documentation.xml | One or more XML documentation files |
+| * and ? patterns | Select input files; quote patterns so the CLI processes them |
 
-Los códigos de salida son 0 para éxito/ayuda, 2 para argumentos o entradas, 3 para metadatos/resolución/XML y 4 para plantillas o escritura.
+Exit codes are 0 for success/help, 2 for arguments or inputs, 3 for metadata/resolution/XML, and 4 for templates or writing output.
 
-## Personalizar la presentación
+## Customize the presentation
 
-Copie src/DocuNet.Rendering/Templates a un directorio propio y edite sus archivos .spark, CSS y JavaScript. Desde src:
+Copy src/DocuNet.Rendering/Templates to your own directory and edit its .spark, CSS and JavaScript files. From src:
 
 ```shell
-dotnet run --project DocuNet.Cli -- --templates=../my-templates --output=../output/custom "/ruta/MiBiblioteca.dll"
+dotnet run --project DocuNet.Cli -- --templates=../my-templates --output=../output/custom "/path/MyLibrary.dll"
 ```
 
-El directorio de plantillas debe contener una copia completa de las plantillas y recursos necesarios. Puede regenerar el sitio tras editarlos sin recompilar DocuNet. Las plantillas compilan C#: utilice plantillas de confianza.
+The template directory must contain a complete copy of the required templates and resources. You can regenerate the site after editing them without recompiling DocuNet. Templates compile C#: use trusted templates.
 
-El contrato de datos, helpers y expansión de nombres está en [arquitectura y plantillas](docs/architecture.md).
+The data contract, helpers and name expansion rules are documented in [architecture and templates](docs/architecture.md).
 
-## Regeneración y publicación
+## Regeneration and publishing
 
-La salida incluye .docunet-manifest.json, que identifica los archivos administrados. Conserve ese manifiesto: DocuNet rechaza colisiones con archivos ajenos y cambios manuales en archivos generados. Personalice las plantillas para regenerar el sitio.
+Output includes .docunet-manifest.json, which identifies managed files. Keep this manifest: DocuNet rejects collisions with unrelated files and manual changes to generated files. Customize templates to regenerate the site.
 
-El render se prepara antes de reemplazar la salida. La copia final de múltiples archivos no es una transacción atómica frente a interrupciones del sistema. Las rutas enlazadas o reparse points no se admiten para plantillas ni salida.
+Rendering is prepared before output is replaced. The final copy of multiple files is not an atomic transaction against system interruptions. Linked paths or reparse points are not supported for templates or output.
 
-Publique el contenido generado mediante su alojamiento estático preferido. El CLI genera archivos; no hace commits, push ni despliegues.
+Publish the generated content using your preferred static hosting provider. The CLI generates files; it does not commit, push or deploy.
 
-## Documentación
+## Documentation
 
-- [Demo y publicación en GitHub Pages](docs/demo.md).
-- [Arquitectura y contrato de plantillas](docs/architecture.md).
-- [Organización del código](docs/source-layout.md).
-- [Tecnologías](docs/technology.md).
-- [Pruebas y cobertura](docs/testing.md).
-- [Hoja de ruta](docs/roadmap.md).
-- [Cómo contribuir](CONTRIBUTING.md).
-- [Política de seguridad](SECURITY.md).
-- [Avisos y licencias de terceros](THIRD-PARTY-NOTICES.md).
+- [Demo and GitHub Pages publishing](docs/demo.md).
+- [Architecture and template contract](docs/architecture.md).
+- [Source layout](docs/source-layout.md).
+- [Technology](docs/technology.md).
+- [Testing and coverage](docs/testing.md).
+- [Roadmap](docs/roadmap.md).
+- [Contributing](CONTRIBUTING.md).
+- [Security policy](SECURITY.md).
+- [Third-party notices and licenses](THIRD-PARTY-NOTICES.md).
 
-## Limitaciones actuales
+## Current limitations
 
-La resolución de herencia usa referencias de .NET Framework 4.8 para entradas Framework y la plataforma .NET del CLI para entradas modernas; la superficie heredada puede diferir de la de otros runtimes. No se expande inheritdoc ni se admiten firmas function-pointer. Consulte los detalles en la documentación de arquitectura.
+Inheritance resolution uses .NET Framework 4.8 references for Framework inputs and the CLI's .NET platform for modern inputs; the inherited API surface may differ from other runtimes. inheritdoc is not expanded, and function-pointer signatures are not supported. See the architecture documentation for details.
 
-## Reconocimientos
+## Acknowledgments
 
-[Docu](https://github.com/jagregory/docu), creado por James Gregory, es la inspiración de DocuNet y la base de sus plantillas heredadas, adaptadas para este proyecto. Se conserva su crédito y licencia junto con los avisos de los recursos de terceros. DocuNet es un proyecto independiente; este reconocimiento no implica respaldo de los autores originales.
+[Docu](https://github.com/jagregory/docu), created by James Gregory, is the inspiration for DocuNet and the basis of its legacy templates, adapted for this project. Its attribution and license are preserved alongside the notices for third-party resources. DocuNet is an independent project; this acknowledgment does not imply endorsement by the original authors.
 
-## Licencia
+## License
 
-DocuNet se distribuye bajo la [licencia MIT](license.md).
+DocuNet is distributed under the [MIT license](license.md).
 
-Copyright (c) 2026 Fernando Paz. Puede usar, modificar y redistribuir el código, incluidos usos comerciales, conservando el aviso de copyright y el texto de la licencia. Los componentes de terceros conservan sus propios avisos y términos.
+Copyright (c) 2026 Fernando Paz. You may use, modify and redistribute the code, including commercially, while preserving the copyright notice and license text. Third-party components retain their own notices and terms.

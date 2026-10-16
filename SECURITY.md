@@ -1,35 +1,35 @@
-# Política de seguridad
+# Security Policy
 
-## Versiones atendidas
+## Supported versions
 
-Se evalúan reportes sobre la revisión más reciente de master. El proyecto no mantiene actualmente ramas LTS ni garantiza correcciones retroactivas para versiones antiguas.
+Reports are evaluated against the latest revision of master. The project does not currently maintain LTS branches or guarantee backports for older versions.
 
-## Reportar una vulnerabilidad
+## Reporting a vulnerability
 
-No publique detalles explotables, credenciales, DLL privadas ni pruebas de concepto sensibles en Issues o pull requests públicos.
+Do not publish exploitable details, credentials, private DLLs or sensitive proof-of-concept material in public issues or pull requests.
 
-Si el repositorio tiene habilitado el reporte privado de vulnerabilidades de GitHub, utilice Security → Report a vulnerability. Si no está disponible, escriba al mantenedor a [ferpaz64@gmail.com](mailto:ferpaz64@gmail.com) con el asunto “DocuNet: reporte de seguridad”. Use ese primer contacto para acordar cómo compartir material sensible; no adjunte ensamblados confidenciales.
+If GitHub private vulnerability reporting is enabled for the repository, use Security → Report a vulnerability. Otherwise, contact the maintainer at [ferpaz64@gmail.com](mailto:ferpaz64@gmail.com) with the subject "DocuNet: security report". Use this first contact to agree on how to share sensitive material; do not attach confidential assemblies.
 
-Incluya:
+Include:
 
-- Revisión o versión afectada, sistema operativo y SDK/runtime.
-- Componente y comando implicados.
-- Pasos mínimos de reproducción con datos sintéticos.
-- Impacto y condiciones necesarias, distinguiendo observaciones de suposiciones.
-- Si el problema afecta al CLI, las plantillas o el sitio generado.
+- Affected revision or version, operating system and SDK/runtime.
+- Component and command involved.
+- Minimal reproduction steps using synthetic data.
+- Impact and required conditions, distinguishing observations from assumptions.
+- Whether the issue affects the CLI, templates or generated site.
 
-La revisión se realiza según disponibilidad; no se promete un plazo fijo. El mantenedor coordinará reproducción, corrección y divulgación con quien reporte el problema. Los errores sin impacto de seguridad pueden registrarse en GitHub Issues.
+Reports are reviewed as availability allows; no fixed response time is promised. The maintainer will coordinate reproduction, remediation and disclosure with the reporter. Bugs without a security impact can be filed in GitHub Issues.
 
-## Límites de confianza
+## Trust boundaries
 
-DocuNet lee metadatos sin ejecutar código ni constructores de atributos de la biblioteca documentada. Esto no equivale a un sandbox para entradas malformadas: limite permisos y recursos al procesar archivos de origen desconocido.
+DocuNet reads metadata without executing code or attribute constructors from the documented library. This is not a sandbox for malformed inputs: restrict permissions and resources when processing files from unknown sources.
 
-Las plantillas Spark compilan y ejecutan C# de quien las edita; use únicamente plantillas de confianza. No acepte plantillas arbitrarias de usuarios en un servicio público sin aislamiento externo.
+Spark templates compile and execute C# supplied by their author; use only trusted templates. Do not accept arbitrary user templates in a public service without external isolation.
 
-El contenido XML se escapa en las plantillas suministradas. Las personalizaciones deben preservar ese escape y comprobar enlaces y rutas. El manifiesto de salida debe conservarse para proteger archivos administrados y contenido ajeno.
+XML content is escaped in the supplied templates. Customizations must preserve this escaping and check links and paths. Keep the output manifest to protect managed files and unrelated content.
 
-Las plantillas actuales incluyen jQuery y ScrollTo heredados. Su sustitución figura en la [hoja de ruta](docs/roadmap.md); no se afirma que sean dependencias modernas o libres de vulnerabilidades. Comunique cualquier impacto reproducible sobre DocuNet por el canal privado anterior.
+The current templates include legacy jQuery and ScrollTo. Their replacement is listed in the [roadmap](docs/roadmap.md); they are not claimed to be modern or free of vulnerabilities. Report any reproducible impact on DocuNet through the private channel above.
 
-## Publicación y dependencias
+## Publishing and dependencies
 
-Conserve avisos y licencias de terceros en las distribuciones. Revise alertas de dependencias y cambios de seguridad antes de publicar versiones. La existencia de esta política no activa por sí sola el reporte privado de GitHub ni otras opciones de seguridad del repositorio.
+Preserve third-party notices and licenses in distributions. Review dependency alerts and security changes before publishing releases. This policy does not itself enable GitHub private reporting or other repository security settings.

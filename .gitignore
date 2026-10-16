@@ -7,7 +7,7 @@
 /.artifacts/
 /.local/
 
-# Archivo local de la reconstrucción inicial; seguimiento público mediante GitHub Issues
+# Local records from the initial reconstruction; public tracking uses GitHub Issues
 /docs/analysis/**/*
 /docs/requirements/**/*
 !/docs/requirements/README.md

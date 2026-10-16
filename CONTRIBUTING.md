@@ -1,28 +1,28 @@
-# Contribuir a DocuNet
+# Contributing to DocuNet
 
-Las contribuciones pueden mejorar el lector de metadatos, la documentación, las pruebas o las plantillas del sitio.
+Contributions can improve the metadata reader, documentation, tests or site templates.
 
-## Seguimiento de trabajo
+## Tracking work
 
-Use GitHub Issues para reportar errores, proponer mejoras y acordar el alcance de cambios. Vincule los pull requests con su issue cuando corresponda. Los expedientes y resultados históricos locales no son necesarios para contribuir ni deben adjuntarse al repositorio público.
+Use GitHub Issues to report bugs, propose improvements and agree on the scope of changes. Link pull requests to their issue when appropriate. Local historical records and results are not required to contribute and must not be attached to the public repository.
 
-Para vulnerabilidades, siga [SECURITY.md](SECURITY.md) y use un canal privado.
+For vulnerabilities, follow [SECURITY.md](SECURITY.md) and use a private channel.
 
-## Informar un problema
+## Reporting a problem
 
-Describa el comportamiento esperado y el observado, el comando utilizado, el sistema operativo, la versión del SDK y los diagnósticos. Si es posible, incluya un proyecto mínimo compilable que reproduzca el problema. No publique DLL privadas, credenciales ni documentación sensible.
+Describe the expected and observed behavior, the command used, operating system, SDK version and diagnostics. If possible, include a minimal buildable project that reproduces the problem. Do not publish private DLLs, credentials or sensitive documentation.
 
-## Preparar un cambio
+## Preparing a change
 
-1. Revise README.md y la documentación de arquitectura.
-2. Compile y ejecute las pruebas desde src.
-3. Mantenga separado el procesamiento de ensamblados del renderizado.
-4. Agregue una regresión de comportamiento cuando corrija un defecto.
-5. Actualice la documentación si cambia el contrato del CLI o de las plantillas.
+1. Review README.md and the architecture documentation.
+2. Build and run tests from src.
+3. Keep assembly processing separate from rendering.
+4. Add a behavioral regression test when fixing a defect.
+5. Update documentation if the CLI or template contract changes.
 
-Para cambios de interfaz, adjunte capturas y describa las comprobaciones de navegación, tamaño de pantalla y accesibilidad. Para cambios grandes, acuerde primero su alcance con los mantenedores.
+For interface changes, attach screenshots and describe navigation, viewport and accessibility checks. For large changes, agree on scope with the maintainers first.
 
-## Comprobaciones
+## Checks
 
 ```shell
 cd src
@@ -31,10 +31,12 @@ dotnet build
 dotnet test
 ```
 
-Consulte [pruebas y cobertura](docs/testing.md) para medir la cobertura y verificar sus umbrales. No incluya bin/obj, sitios generados, reportes locales ni muestras privadas.
+See [testing and coverage](docs/testing.md) to measure coverage and check its thresholds. Do not include bin/obj, generated sites, local reports or private samples.
 
-## Convenciones
+## Conventions
 
-Use C#, cuatro espacios, referencias anulables, PascalCase para tipos y miembros públicos y camelCase para parámetros y variables. Mantenga proyectos y configuración de desarrollo dentro de src.
+Use C#, four spaces, nullable reference types, PascalCase for public types and members and camelCase for parameters and variables. Keep projects and development configuration inside src.
 
-Explique qué cambia, por qué y cómo se verificó en la propuesta de contribución. Conserve los avisos de autoría y de componentes de terceros.
+Write public documentation and new explanatory text in English. Preserve original third-party notices and license text.
+
+Explain what changes, why and how it was verified in your contribution. Preserve authorship and third-party component notices.

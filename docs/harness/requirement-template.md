@@ -1,67 +1,67 @@
-# Plantilla de requerimiento
+# Requirement template
 
-Copie a `docs/requirements/YYYY-MM-DD_CODIGO_slug.md`. Complete antes de programar; justifique cada «No aplica».
+Copy to docs/requirements/YYYY-MM-DD_CODE_slug.md. Complete before coding; explain every "Not applicable" entry.
 
-# CODIGO — Título
+# CODE — Title
 
-- Inicio: YYYY-MM-DD (zona horaria del usuario)
-- Estado: Borrador
+- Start: YYYY-MM-DD (user's time zone)
+- Status: Draft
 - Coordinator / Developer / Tester:
-- Modalidad: agentes separados o fases del mismo agente
-- Base / branch de desarrollo / destino:
-- Repositorios afectados:
+- Mode: separate agents or phases of the same agent
+- Base / development branch / target:
+- Affected repositories:
 
-## Objetivo y descripción
+## Objective and description
 
-Problema, usuario beneficiado, resultado esperado, entradas y salidas. Incluya la versión de la biblioteca o del producto cuando corresponda.
+Problem, beneficiary, expected result, inputs and outputs. Include the library or product version when applicable.
 
-## Alcance
+## Scope
 
-Cambios incluidos, exclusiones, dependencias, riesgos y preguntas abiertas.
+Included changes, exclusions, dependencies, risks and open questions.
 
-## Insumos, fases y decisiones
+## Inputs, phases and decisions
 
-Liste artefactos y rutas, disponibilidad, sensibilidad y si están ignorados por Git. Registre identidad/hashes cuando se inspeccionen. Distinga decisiones confirmadas, propuestas y preguntas abiertas.
+List artifacts and paths, availability, sensitivity and whether Git ignores them. Record identity/hashes when inspected. Distinguish confirmed decisions, proposals and open questions.
 
-Si requiere investigación, defina preguntas y entregables, evidencia persistente y aprobación humana de resultados antes de implementar. Especifique equivalencia observable y diferencias permitidas cuando sustituya una herramienta existente.
+If research is needed, define questions and deliverables, persistent evidence and human approval of results before implementation. Specify observable equivalence and permitted differences when replacing an existing tool.
 
-## Criterios de aceptación
+## Acceptance criteria
 
-| ID | Escenario y resultado verificable | Pruebas asociadas |
+| ID | Scenario and verifiable result | Associated tests |
 | --- | --- | --- |
-| CA-01 | Completar | UT-01, IT-01 |
+| CA-01 | To be completed | UT-01, IT-01 |
 
-## Diseño de pruebas
+## Test design
 
-| ID | Tipo (unitaria/regresión/integración) | Entrada o fixture | Comando/procedimiento | Resultado esperado |
+| ID | Type (unit/regression/integration) | Input or fixture | Command/procedure | Expected result |
 | --- | --- | --- | --- | --- |
-| UT-01 | Unitaria | Completar | Completar | Completar |
-| IT-01 | Integración | Completar | Completar | Completar |
+| UT-01 | Unit | To be completed | To be completed | To be completed |
+| IT-01 | Integration | To be completed | To be completed | To be completed |
 
-Defina regresión, plataformas a validar, preparación/limpieza del entorno y ubicación de resultados. Incluya casos negativos y conservación de versiones existentes si aplica. No registre comandos propuestos como ejecutados.
+Define regression coverage, platforms to validate, environment setup/cleanup and result locations. Include negative cases and preservation of existing versions where applicable. Do not record proposed commands as executed.
 
-## Aprobaciones humanas
+## Human approvals
 
-| Puerta | Estado | Persona, fecha y referencia | Condiciones |
+| Gate | Status | Person, date and reference | Conditions |
 | --- | --- | --- | --- |
-| Alcance antes de ejecutar | Pendiente | — | — |
-| Comportamiento/diseño tras investigación, si aplica | Pendiente | — | Antes de programar |
-| Resultado validado | Pendiente | — | — |
-| Merge al destino | Pendiente | — | — |
-| Push/despliegue, si aplica | Pendiente | — | — |
+| Scope before execution | Pending | — | — |
+| Behavior/design after research, if applicable | Pending | — | Before coding |
+| Validated result | Pending | — | — |
+| Merge into target | Pending | — | — |
+| Push/deployment, if applicable | Pending | — | — |
 
-## Entrega del Developer y revisión del Coordinator
+## Developer delivery and Coordinator review
 
-Archivos, decisiones, criterios satisfechos, pruebas unitarias ejecutadas, documentación actualizada y pendientes.
+Files, decisions, satisfied criteria, executed unit tests, updated documentation and outstanding items.
 
-## Informe del Tester
+## Tester report
 
-Revisión probada, entorno, comandos realmente ejecutados, resultados y evidencia persistente. Enumere fallos y omisiones. Indique a quién devuelve el control.
+Tested revision, environment, commands actually executed, results and persistent evidence. List failures and omissions. State who receives control next.
 
-## Trazabilidad y cierre
+## Traceability and closure
 
-Commits de implementación, documentación, PR, merge, revisión integrada validada y estado final de cada repositorio. Registre excepciones de arranque, conflictos y decisiones humanas. Cierre únicamente tras aprobación y comprobación del árbol limpio.
+Implementation commits, documentation, PR, merge, validated integrated revision and final state of each repository. Record bootstrap exceptions, conflicts and human decisions. Close only after approval and a clean working tree check.
 
-## Relevo entre sesiones
+## Session handoff
 
-Estado real, decisiones confirmadas, bloqueos, insumos que debe aportar el humano, documentos/evidencias para leer y próxima acción autorizada. Identifique pruebas ejecutadas, propuestas y pendientes. No dé por disponibles datos locales solo porque existían en otra sesión.
+Actual state, confirmed decisions, blockers, inputs the human must supply, documents/evidence to read and next authorized action. Identify executed, proposed and pending tests. Do not assume local data is available just because it existed in another session.

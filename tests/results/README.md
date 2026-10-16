@@ -1,5 +1,5 @@
-# Resultados de pruebas
+# Test results
 
-Use `<codigo>/<ejecucion>/` para separar ejecuciones, por ejemplo `DOCUNET-001/2026-10-15T140000/`. Guarde logs, reportes y sitio generado sin credenciales ni datos privados.
+Use `<code>/<run>/` to separate runs, for example DOCUNET-001/2026-10-15T140000/. Store logs, reports and the generated site without credentials or private data.
 
-Los resultados locales están ignorados. Conserve el resumen y la evidencia necesaria para revisión en el expediente o en un artefacto persistente enlazado antes del cierre. No dependa exclusivamente de archivos ignorados para justificar aceptación.
+Local results are ignored. Before closure, preserve the summary and evidence needed for review in the requirement record or a linked persistent artifact. Do not rely exclusively on ignored files to justify acceptance.

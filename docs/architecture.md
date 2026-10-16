@@ -1,30 +1,30 @@
-# Arquitectura y contrato de plantillas
+# Architecture and template contract
 
-## Componentes
+## Components
 
 ```mermaid
 flowchart LR
     CLI[DocuNet.Cli] --> CORE[DocuNet.Core]
     CLI --> RENDER[DocuNet.Rendering]
-    DLL[DLL: bytes y metadatos] --> CORE
-    XML[XML: IDs y comentarios] --> CORE
-    CORE --> MODEL[Modelo de documentación]
+    DLL[DLL: bytes and metadata] --> CORE
+    XML[XML: IDs and comments] --> CORE
+    CORE --> MODEL[Documentation model]
     MODEL --> RENDER
-    SPARK[Plantillas Spark externas y recursos] --> RENDER
-    RENDER --> HTML[HTML estático y manifiesto]
+    SPARK[External Spark templates and resources] --> RENDER
+    RENDER --> HTML[Static HTML and manifest]
 ```
 
-Core usa PEReader y MetadataReader y decodifica firmas ECMA-335. Mantiene ID XML exacto del miembro declarado, identidad por tipo propietario y referencias para miembros heredados. Lee atributos como blobs de metadatos. XML se carga sin DTD ni entidades externas. No se usa Assembly.Load con entradas.
+Core uses PEReader and MetadataReader and decodes ECMA-335 signatures. It preserves each declared member's exact XML ID, identity by declaring type and references for inherited members. Attributes are read as metadata blobs. XML is loaded without DTDs or external entities. Assembly.Load is not used with inputs.
 
-La resolución busca DLL junto a las entradas. Para ensamblados que referencian mscorlib usa metadatos de referencia de .NET Framework 4.8 distribuidos con el CLI (Microsoft.NETFramework.ReferenceAssemblies.net48 1.0.3); para .NET moderno consulta la plataforma del CLI. No ejecuta dependencias ni mezcla miembros de .NET 10 en la herencia de Framework. Una clase base no resoluble produce código 3, sin anunciar un sitio incompleto. Las entradas Framework anteriores a 4.8 se resuelven contra 4.8; las entradas modernas anteriores a .NET 10 usan referencias de .NET 10. La superficie heredada puede variar frente al runtime original; las firmas declaradas se obtienen siempre de la entrada. Métodos especiales y constructores no se documentan, conforme al original. Campos públicos de enum, incluido value__, sí se conservan.
+Resolution searches for DLLs alongside inputs. For assemblies referencing mscorlib, it uses .NET Framework 4.8 reference metadata distributed with the CLI (Microsoft.NETFramework.ReferenceAssemblies.net48 1.0.3); for modern .NET it consults the CLI's platform. It does not execute dependencies or mix .NET 10 members into Framework inheritance. An unresolvable base class produces exit code 3 rather than reporting an incomplete site as successful. Framework inputs older than 4.8 are resolved against 4.8; modern inputs older than .NET 10 use .NET 10 references. The inherited API surface may differ from the original runtime; declared signatures always come from the input. Special methods and constructors are not documented, matching the original behavior. Public enum fields, including value__, are preserved.
 
-Rendering no recibe objetos Reflection del target. Recibe DTO de Core, interpreta nombres de plantillas y genera en un staging nuevo. Solo tras terminar el render y validar el plan reemplaza archivos administrados sin cambios manuales. El manifiesto se escribe al terminar; un fallo del sistema de archivos durante la copia final se comunica como error y requiere revisar esa salida antes de regenerar. No se promete una transacción atómica de múltiples archivos frente a interrupciones del sistema.
+Rendering does not receive Reflection objects from the target. It receives Core DTOs, interprets template names and generates output in a new staging directory. Only after rendering finishes and the plan is validated does it replace unchanged managed files. The manifest is written at the end; a filesystem failure during the final copy is reported as an error and requires reviewing that output before regenerating. An atomic multi-file transaction against system interruptions is not guaranteed.
 
-## Plantillas externas
+## External templates
 
-Motor: Spark 1.8.2.4-alpha con Roslyn en .NET 10. Dependencias fijadas en packages.lock.json; no se usa el Spark Framework original. Cada generación usa un motor nuevo para observar cambios de plantillas/parciales.
+Engine: Spark 1.8.2.4-alpha with Roslyn on .NET 10. Dependencies are locked in packages.lock.json; the original Framework Spark package is not used. Each generation uses a new engine so template/partial changes are picked up.
 
-| Ruta | Expansión |
+| Path | Expansion |
 | --- | --- |
 | index.htm.spark | index.htm |
 | !namespace/index.htm.spark | namespace/index.htm |
@@ -32,35 +32,35 @@ Motor: Spark 1.8.2.4-alpha con Roslyn en .NET 10. Dependencias fijadas en packag
 | !type.htm.spark | namespace.Type.Name.htm |
 | !type/index.htm.spark | namespace.Type.Name/index.htm |
 | !namespace/!type/index.htm.spark | namespace/namespace.Type.Name/index.htm |
-| _partial.spark | Parcial; no genera archivo independiente |
-| layouts/ | No genera páginas independientes |
+| _partial.spark | Partial; does not generate a standalone file |
+| layouts/ | Does not generate standalone pages |
 
-Las carpetas especiales se reconocen por nombre exacto; en el archivo se admite prefijo !namespace o !type. Se conservan nombres históricos cortos donde son inequívocos; colisiones de tipos anidados se distinguen por su cadena de tipos propietarios.
+Special folders are recognized by exact name; filenames support the !namespace or !type prefix. Historical short names are preserved where unambiguous; nested type collisions are distinguished by their chain of declaring types.
 
-Contexto: Assemblies, Namespaces, Types, Namespace y Type actuales, ViewData y RelativeOutputPath. Helpers conservados: h, Format de comentario/referencia, SiteResource, OutputMethodParams, WriteInterfaces, WriteProductName, WriteFileDescription, WriteAssemblyTitle, WriteVersion y Set*UrlFormat. Las firmas de los helpers reciben DTO, no System.Reflection.Assembly/Type/MethodInfo. Personalizaciones que usaban esas APIs requieren adaptar su acceso a datos.
+Context: Assemblies, Namespaces, Types, the current Namespace and Type, ViewData and RelativeOutputPath. Preserved helpers: h, comment/reference Format, SiteResource, OutputMethodParams, WriteInterfaces, WriteProductName, WriteFileDescription, WriteAssemblyTitle, WriteVersion and Set*UrlFormat. Helper signatures accept DTOs rather than System.Reflection.Assembly/Type/MethodInfo. Customizations using those APIs must adapt their data access.
 
-Los parsers reconocen texto, c/code, para, paramref, see cref y listas definition/number/bullet/table. Los generadores leen summary, remarks, example, returns, value y param. No se expande inheritdoc/inheriteddoc ni se corrige sumary. Texto de XML se codifica para HTML; h codifica texto y Format genera marcado seguro.
+Parsers recognize text, c/code, para, paramref, see cref and definition/number/bullet/table lists. Generators read summary, remarks, example, returns, value and param. inheritdoc/inheriteddoc is not expanded, and sumary is not corrected. XML text is HTML-encoded; h encodes text and Format generates safe markup.
 
-La sintaxis Spark es código de personalización confiable: puede ejecutar C# de quien edita las plantillas. La garantía de no ejecutar ensamblados se aplica a las DLL de documentación, no a plantillas C# arbitrarias del usuario.
+Spark syntax is trusted customization code: it can execute C# supplied by the template author. The guarantee of not executing assemblies applies to documentation input DLLs, not arbitrary user C# templates.
 
-### Personalizar
+### Customization
 
-Copie Templates, edite index.htm.spark, _common_footer.spark o main.css y ejecute el CLI con --templates apuntando a la copia. Agregue recursos no Spark para copiarlos conservando el árbol. Los archivos/rutas con atributo Hidden se omiten como recursos; los symlinks/reparse points se rechazan. Un error de plantilla produce código 4 y conserva el sitio previo.
+Copy Templates, edit index.htm.spark, _common_footer.spark or main.css and run the CLI with --templates pointing to the copy. Add non-Spark resources to copy them while preserving the directory tree. Files/paths with the Hidden attribute are omitted as resources; symlinks/reparse points are rejected. A template error produces exit code 4 and preserves the previous site.
 
-Cambio respecto de las plantillas históricas: use `id="${Anchor(method)}"` (y property/field/ev) para cada bloque de miembro. Los helpers Format usan la misma ancla derivada del ID completo. Añada `LegacyAnchor(member)` solo cuando no esté vacío para compatibilidad de enlaces antiguos inequívocos; las plantillas suministradas ya incluyen esa adaptación. Mantener id basado solo en Name conserva la ambigüedad histórica y no cumple el contrato aprobado.
+Change from historical templates: use `id="${Anchor(method)}"` (and property/field/ev) for each member block. Format helpers use the same anchor derived from the full ID. Add `LegacyAnchor(member)` only when nonempty for compatibility with unambiguous old links; the supplied templates already include this adaptation. Keeping an id based only on Name preserves historical ambiguity and does not meet the approved contract.
 
-Se retiró el script HTTP condicional de IE antiguo. CSS y los cuatro recursos JavaScript distribuidos se preservan; la plantilla de footer sigue editable.
+The old conditional HTTP script for IE was removed. CSS and the four distributed JavaScript resources are preserved; the footer template remains editable.
 
-## Validación
+## Validation
 
-La suite normal usa src/tests/DocuNet.TestFixtures y directorios aislados. Sus módulos y atributos lanzan excepciones si se ejecutan, permitiendo comprobar que el lector trabaja solo con metadatos. Las pruebas verifican contenido, enlaces, regeneración y protección de archivos.
+The normal suite uses src/tests/DocuNet.TestFixtures and isolated directories. Its modules and attributes throw exceptions if executed, allowing tests to verify that the reader uses metadata only. Tests verify content, links, regeneration and file protection.
 
-Para comparar sitios adicionales, SampleValidationTests admite las variables DOCUNET_BASELINE, DOCUNET_GENERATED, DOCUNET_VALIDATION_RESULTS y DOCUNET_ACCEPTED_DIFFERENCES. Esta integración es explícita y necesita sus propias entradas y reglas; no forma parte de la suite pública normal.
+To compare additional sites, SampleValidationTests accepts DOCUNET_BASELINE, DOCUNET_GENERATED, DOCUNET_VALIDATION_RESULTS and DOCUNET_ACCEPTED_DIFFERENCES environment variables. This integration is explicit and requires its own inputs and rules; it is not part of the normal public suite.
 
-Los comandos generales y los umbrales se describen en [pruebas y cobertura](testing.md). La validación visual y de accesibilidad debe acompañar cambios en la presentación.
+General commands and thresholds are described in [testing and coverage](testing.md). Visual and accessibility validation must accompany presentation changes.
 
-## Créditos y avisos distribuidos
+## Credits and distributed notices
 
-El footer identifica a DocuNet y reconoce a Docu de James Gregory como inspiración. THIRD-PARTY-NOTICES.txt se copia como recurso del sitio y se enlaza mediante SiteResource, por lo que funciona también en páginas anidadas. Conserve los avisos originales de los JS y el archivo de licencias del sitio al personalizar las plantillas.
+The footer identifies DocuNet and acknowledges James Gregory's Docu as inspiration. THIRD-PARTY-NOTICES.txt is copied as a site resource and linked through SiteResource, so it also works on nested pages. Preserve original JavaScript notices and the site's license file when customizing templates.
 
-Al distribuir el CLI, incluya su licencia y [avisos de terceros](../THIRD-PARTY-NOTICES.md), junto con los textos bajo docs/licenses. No confunda dependencias del ejecutable con recursos del sitio estático.
+When distributing the CLI, include its license and [third-party notices](../THIRD-PARTY-NOTICES.md), along with the texts under docs/licenses. Distinguish executable dependencies from static site resources.

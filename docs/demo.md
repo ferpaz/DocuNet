@@ -1,38 +1,38 @@
-# Demo pública en GitHub Pages
+# Public demo on GitHub Pages
 
-La demo se genera desde src/tests/DocuNet.TestFixtures, que contiene código y comentarios XML sintéticos incluidos en el repositorio. Ejemplifica genéricos, herencia, sobrecargas, miembros y referencias; no representa documentación de un producto privado.
+The demo is generated from src/tests/DocuNet.TestFixtures, which contains synthetic code and XML comments included in the repository. It demonstrates generics, inheritance, overloads, members and references; it does not represent documentation for a private product.
 
-## Automatización
+## Automation
 
-El workflow [Publish demo](../.github/workflows/demo.yml) se ejecuta al recibir cambios en master o manualmente mediante workflow_dispatch, siempre sobre master.
+The [Publish demo](../.github/workflows/demo.yml) workflow runs on changes to master or manually through workflow_dispatch, always on master.
 
-1. Restaura dependencias bloqueadas, compila y ejecuta pruebas y cobertura.
-2. Genera el sitio con el CLI y el fixture público.
-3. Copia index.htm a index.html para la entrada predeterminada de GitHub Pages.
-4. Sube exclusivamente el directorio generado como artefacto de Pages.
-5. Publica mediante el entorno github-pages.
+1. Restores locked dependencies, builds and runs tests with coverage.
+2. Generates the site using the CLI and public fixture.
+3. Copies index.htm to index.html for the default GitHub Pages entry point.
+4. Uploads only the generated directory as the Pages artifact.
+5. Publishes through the github-pages environment.
 
-El HTML generado no se añade a master ni necesita una rama gh-pages. El artefacto contiene el sitio y sus avisos de terceros; no contiene muestras privadas, ensamblados del fixture, archivos del repositorio ni reportes de cobertura.
+Generated HTML is not added to master and does not require a gh-pages branch. The artifact contains the site and its third-party notices; it does not contain private samples, fixture assemblies, repository files or coverage reports.
 
-Los enlaces relativos funcionan bajo el subdirectorio del repositorio. La URL real se obtiene de la salida del despliegue y aparece en el entorno github-pages y en la página del workflow; no depende de un nombre de usuario o repositorio fijado en código.
+Relative links work under the repository subdirectory. The actual URL comes from deployment output and appears in the github-pages environment and workflow page; it does not depend on a hard-coded username or repository name.
 
-## Habilitar la publicación
+## Enable publishing
 
-Una vez creado el repositorio público y subidos los cambios:
+Once the public repository has been created and changes pushed:
 
-1. Abra Settings → Pages.
-2. En Build and deployment seleccione Source: GitHub Actions.
-3. Revise las reglas del entorno github-pages para permitir despliegues desde master.
-4. Ejecute Publish demo desde Actions sobre master, o suba un cambio a esa rama.
-5. Consulte la URL emitida por el despliegue y actualice el enlace «Ver demo» del README con esa dirección.
+1. Open Settings → Pages.
+2. Under Build and deployment, select Source: GitHub Actions.
+3. Review github-pages environment rules to allow deployments from master.
+4. Run Publish demo from Actions on master, or push a change to that branch.
+5. Check the URL emitted by deployment and update the README's "View the demo" link to that address.
 
-Actualmente la demo remota no está publicada. El workflow preparado y las comprobaciones locales no acreditan ejecución de GitHub Actions. El README enlaza estas instrucciones hasta disponer de la URL real.
+The remote demo is not currently published. The prepared workflow and local checks do not establish that GitHub Actions has run. The README links to these instructions until the actual URL is available.
 
-Documentación oficial: [workflows de GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+Official documentation: [GitHub Pages workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
-## Generar la demo localmente
+## Generate the demo locally
 
-Desde src:
+From src:
 
 ```powershell
 dotnet restore --locked-mode
@@ -41,8 +41,8 @@ dotnet run --no-build --configuration Release --project DocuNet.Cli -- --output=
 Copy-Item ../output/demo/index.htm ../output/demo/index.html
 ```
 
-Abra output/demo/index.html. La copia adicional solo adapta la entrada del alojamiento; la salida original y sus enlaces index.htm se conservan.
+Open output/demo/index.html. The extra copy only adapts the hosting entry point; the original output and its index.htm links are preserved.
 
-## Evolución
+## Future improvements
 
-La demo refleja las plantillas actuales. Las mejoras responsive, de navegación y sustitución de jQuery se incorporarán según la [hoja de ruta](roadmap.md), conservando los contratos de contenido y enlaces.
+The demo reflects the current templates. Responsive design, navigation improvements and jQuery replacement will follow the [roadmap](roadmap.md), preserving content and link contracts.

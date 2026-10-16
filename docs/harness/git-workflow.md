@@ -1,32 +1,32 @@
-# Flujo Git del HARNESS
+# HARNESS Git workflow
 
-## Inicio limpio y actualizado
+## Start clean and up to date
 
-1. Confirme raíz, branch, remotos y upstream: `git rev-parse --show-toplevel`, `git status --short --branch`, `git remote -v`, `git branch -vv`.
-2. Si hay cambios previos, identifique su origen y detenga las modificaciones del requerimiento. Solicite al humano decidir cómo preservarlos. No haga stash, reset, clean, descarte ni commits de trabajo ajeno automáticamente.
-3. Con árbol limpio y upstream configurado, ejecute `git pull --ff-only`. Ante divergencia, error de permisos o autenticación, informe el bloqueo; no fuerce la sincronización.
-4. En un repositorio sin commits o remoto, documente la excepción de arranque. La preparación documental puede continuar; acuerde la base y configuración Git antes de implementar. No invente una URL remota.
+1. Confirm the root, branch, remotes and upstream: `git rev-parse --show-toplevel`, `git status --short --branch`, `git remote -v`, `git branch -vv`.
+2. If prior changes exist, identify their origin and stop modifying the requirement. Ask the human to decide how to preserve them. Do not automatically stash, reset, clean, discard or commit someone else's work.
+3. With a clean working tree and configured upstream, run `git pull --ff-only`. On divergence, permission or authentication errors, report the blocker; do not force synchronization.
+4. In a repository without commits or a remote, document the bootstrap exception. Documentation preparation may continue; agree on the Git base and configuration before implementing. Do not invent a remote URL.
 
-## Branch de trabajo
+## Working branch
 
-Registre base y branch en el expediente. Use `feature/<codigo>-<slug>` o `fix/<codigo>-<slug>` en minúsculas. `master` es el destino previsto; si no existe o el repositorio usa otro, acuerde el destino antes de integrar.
+Record the base and branch in the requirement record. Use `feature/<code>-<slug>` or `fix/<code>-<slug>` in lowercase. master is the intended destination; if it does not exist or the repository uses another destination, agree on the target before integrating.
 
-Después de aprobar el alcance, cree el branch desde la base sincronizada. Mantenga el expediente preparado junto al trabajo del requerimiento. Use commits enfocados como `DOCUNET-001: Agregar catálogo de versiones`. Revise el diff y agregue archivos explícitos; evite incluir cambios ajenos o secretos.
+After scope approval, create the branch from the synchronized base. Keep the prepared record alongside the requirement's work. Use focused commits such as "DOCUNET-001: Add version catalog". Review the diff and add explicit files; avoid including unrelated changes or secrets.
 
-## Revisión y merge
+## Review and merge
 
-La aprobación del resultado y el permiso de merge son decisiones registradas por separado, aunque el humano puede otorgarlas juntas. Push y despliegue requieren autorización explícita; no se deducen del permiso de merge local.
+Result approval and merge permission are recorded as separate decisions, although the human may grant both together. Push and deployment require explicit authorization; they are not implied by local merge permission.
 
-Antes del merge, asegure commits completos y árbol limpio. Actualice el destino con `git pull --ff-only`; incorpore la base actualizada al branch de trabajo y vuelva a validar si cambió el código o las condiciones probadas. No reescriba historia compartida ni use force push. Si existe protección por PR, respétela.
+Before merging, ensure complete commits and a clean working tree. Update the target with `git pull --ff-only`; incorporate the updated base into the working branch and revalidate if code or tested conditions changed. Do not rewrite shared history or force push. Respect PR protection if present.
 
-Resuelva conflictos solo cuando la intención sea inequívoca. Si afectan alcance o comportamiento, solicite ayuda humana indicando archivos, alternativas e impacto. No elija automáticamente una versión completa del archivo. Después de resolver, ejecute las pruebas afectadas y registre los resultados. Un cambio sustancial posterior a la aprobación exige renovar esa aprobación.
+Resolve conflicts only when intent is unambiguous. If they affect scope or behavior, request human help, identifying files, alternatives and impact. Do not automatically choose an entire version of a file. After resolving conflicts, run affected tests and record results. A substantial change after approval requires renewed approval.
 
-Con autorización, integre al destino. Verifique que contiene los commits del requerimiento (`git merge-base --is-ancestor <commit> master`), revise el resultado y ejecute la validación acordada sobre la revisión integrada. Si falla, informe el fallo y mantenga el requerimiento abierto; no anuncie éxito ni revierta historia compartida sin autorización.
+With authorization, merge into the target. Verify that it contains the requirement's commits (`git merge-base --is-ancestor <commit> master`), review the result and run the agreed validation on the integrated revision. If it fails, report the failure and keep the requirement open; do not announce success or revert shared history without authorization.
 
-## Cierre
+## Closure
 
-Actualice el expediente con aprobación, revisiones probadas, commits, PR o merge y resultados. Si ese registro se añade después del merge, hágalo mediante un commit documental trazable siguiendo las protecciones del destino. Compruebe `git diff --check` y `git status --porcelain`: este último debe quedar vacío. Verifique por separado cualquier repositorio de publicación modificado. Limpieza local no equivale a push ni despliegue.
+Update the record with approval, tested revisions, commits, PR or merge and results. If this record is added after merging, use a traceable documentation commit that follows target protections. Check `git diff --check` and `git status --porcelain`: the latter must be empty. Separately verify any modified publishing repository. A clean local tree does not imply push or deployment.
 
-## Expediente preparado antes de crear el branch
+## Record prepared before branch creation
 
-Refinar un requerimiento puede dejar documentos modificados antes de iniciar la ejecución. No intente hacer pull con esos cambios ni los clasifique automáticamente como trabajo ajeno. Identifique su origen y acuerde preservarlos: por ejemplo, un commit documental autorizado antes de sincronizar, o una base limpia preparada por el humano. Después sincronice y cree el branch de implementación. No descarte ni guarde en stash automáticamente el expediente para satisfacer el inicio limpio.
+Refining a requirement may leave modified documents before execution starts. Do not attempt a pull with those changes or automatically classify them as someone else's work. Identify their origin and agree on preservation: for example, an authorized documentation commit before synchronization, or a clean base prepared by the human. Then synchronize and create the implementation branch. Do not automatically discard or stash the record to satisfy a clean start.

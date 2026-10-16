@@ -1,5 +1,5 @@
-# Requerimientos
+# Requirements
 
-Guarde un expediente por requerimiento usando `YYYY-MM-DD_CODIGO_slug.md`, con fecha de inicio local del usuario, código único y slug descriptivo. Mantenga el nombre al cerrar para conservar enlaces.
+Keep one record per requirement using YYYY-MM-DD_CODE_slug.md, with the user's local start date, a unique code and a descriptive slug. Keep the filename when closing the record to preserve links.
 
-Use la [plantilla del HARNESS](../harness/requirement-template.md) y siga el [protocolo](../harness/README.md). El expediente comienza como borrador y conserva definición, entregas, pruebas, aprobaciones y cierre; no contiene únicamente el resultado final.
+Use the [HARNESS template](../harness/requirement-template.md) and follow the [protocol](../harness/README.md). The record starts as a draft and preserves the definition, deliveries, tests, approvals and closure; it must contain more than the final result.

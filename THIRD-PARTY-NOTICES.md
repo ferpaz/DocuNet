@@ -1,48 +1,48 @@
-# Avisos y licencias de terceros
+# Third-party notices and licenses
 
-DocuNet es un proyecto independiente de Fernando Paz, distribuido bajo [MIT](license.md). Esa licencia cubre sus aportaciones propias y no sustituye las condiciones de los componentes siguientes.
+DocuNet is an independent project by Fernando Paz, distributed under [MIT](license.md). That license covers its original contributions and does not replace the terms of the following components.
 
-## Docu: inspiración y plantillas
+## Docu: inspiration and templates
 
-[Docu](https://github.com/jagregory/docu), creado por James Gregory, inspiró el proyecto. Las plantillas suministradas y los scripts de navegación/ejemplos se basan en sus recursos y se han adaptado para DocuNet.
+[Docu](https://github.com/jagregory/docu), created by James Gregory, inspired this project. The supplied templates and navigation/example scripts are based on its resources and have been adapted for DocuNet.
 
-Copyright (c) 2009, James Gregory. Licencia BSD-3-Clause: se conserva el [texto completo](docs/licenses/docu-BSD-3-Clause.txt), incluidos copyright, condiciones y descargo de responsabilidad. No se implica respaldo del autor original.
+Copyright (c) 2009, James Gregory. BSD-3-Clause license: the [full text](docs/licenses/docu-BSD-3-Clause.txt) is preserved, including copyright, conditions and disclaimer. No endorsement by the original author is implied.
 
-## Recursos del sitio generado
+## Generated site resources
 
-| Recurso | Autoría original | Licencia conservada |
+| Resource | Original authorship | Preserved license |
 | --- | --- | --- |
-| jQuery 1.3.2 | Copyright (c) 2009 John Resig | MIT, elegida entre las alternativas del encabezado original |
-| Sizzle 0.9.3, incluido en jQuery | Copyright 2009, The Dojo Foundation | MIT, elegida entre las alternativas originales |
-| jQuery.ScrollTo 1.4.2 | Copyright (c) 2007–2009 Ariel Flesler | MIT, elegida entre las alternativas originales |
-| Base de CSS HTML5 Boilerplate | Copyright (c) HTML5 Boilerplate | MIT |
+| jQuery 1.3.2 | Copyright (c) 2009 John Resig | MIT, selected from the alternatives in the original header |
+| Sizzle 0.9.3, included in jQuery | Copyright 2009, The Dojo Foundation | MIT, selected from the original alternatives |
+| jQuery.ScrollTo 1.4.2 | Copyright (c) 2007–2009 Ariel Flesler | MIT, selected from the original alternatives |
+| HTML5 Boilerplate CSS foundation | Copyright (c) HTML5 Boilerplate | MIT |
 
-Textos: [jQuery/Sizzle/ScrollTo](docs/licenses/jQuery-Sizzle-ScrollTo-MIT.txt) y [HTML5 Boilerplate](docs/licenses/HTML5-Boilerplate-MIT.txt). Los encabezados originales de los JS se mantienen intactos.
+Texts: [jQuery/Sizzle/ScrollTo](docs/licenses/jQuery-Sizzle-ScrollTo-MIT.txt) and [HTML5 Boilerplate](docs/licenses/HTML5-Boilerplate-MIT.txt). Original JavaScript headers remain intact.
 
-Cada sitio generado con las plantillas suministradas incluye THIRD-PARTY-NOTICES.txt y un enlace desde el footer. Conserve ese archivo y los avisos al distribuir el sitio o sus plantillas.
+Each site generated with the supplied templates includes THIRD-PARTY-NOTICES.txt and a footer link. Preserve that file and the notices when distributing the site or its templates.
 
-Fuentes: [jQuery](https://jquery.com/license/), [ScrollTo](https://github.com/flesler/jquery.scrollTo), [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate).
+Sources: [jQuery](https://jquery.com/license/), [ScrollTo](https://github.com/flesler/jquery.scrollTo), [HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate).
 
-## Dependencias de producción del CLI
+## CLI production dependencies
 
-Las versiones siguientes corresponden a los paquetes fijados en los archivos packages.lock.json. Los paquetes de compilación/pruebas tienen sus propias condiciones; una referencia NuGet no los convierte en código propio de DocuNet.
+The versions below match the packages locked in packages.lock.json files. Build/test packages have their own terms; a NuGet reference does not make them DocuNet's own code.
 
-| Paquete o grupo | Versión | Licencia y avisos incluidos |
+| Package or group | Version | Included license and notices |
 | --- | --- | --- |
-| Spark | 1.8.2.4-alpha | Copyright (c) Louis DeJardin 2008–2024; [Apache-2.0](docs/licenses/Spark-Apache-2.0.txt), según el texto del paquete |
+| Spark | 1.8.2.4-alpha | Copyright (c) Louis DeJardin 2008–2024; [Apache-2.0](docs/licenses/Spark-Apache-2.0.txt), according to the package text |
 | MarkdownSharp | 2.0.5 | Copyright (c) 2018 Stack Exchange; [MIT](docs/licenses/MarkdownSharp-MIT.txt) |
-| Microsoft.CodeAnalysis.Common, CSharp y VisualBasic | 4.14.0 | .NET Foundation and Contributors; [MIT](docs/licenses/Roslyn-MIT.txt) y [avisos adicionales](docs/licenses/Roslyn-ThirdPartyNotices.rtf) |
-| Microsoft.CodeAnalysis.Analyzers, solo compilación | 3.11.0 | MIT, según metadatos NuGet; no se distribuye como ensamblado del CLI |
-| Microsoft.Extensions.Caching.Abstractions/Memory, DependencyInjection.Abstractions, Logging.Abstractions, Options y Primitives | 9.0.9 | .NET Foundation and Contributors; [MIT](docs/licenses/NET-Foundation-MIT.txt) y [avisos adicionales](docs/licenses/NET-ThirdPartyNotices.txt) |
-| System.Configuration.ConfigurationManager, Diagnostics.EventLog y Security.Cryptography.ProtectedData | 9.0.9 | Mismos [MIT](docs/licenses/NET-Foundation-MIT.txt) y [avisos .NET](docs/licenses/NET-ThirdPartyNotices.txt) |
-| Microsoft.NETFramework.ReferenceAssemblies.net48 | 1.0.3 | Copyright (c) 2019 Microsoft; [MIT](docs/licenses/NET-Framework-ReferenceAssemblies-MIT.txt), indicado por licenseUrl del paquete |
+| Microsoft.CodeAnalysis.Common, CSharp and VisualBasic | 4.14.0 | .NET Foundation and Contributors; [MIT](docs/licenses/Roslyn-MIT.txt) and [additional notices](docs/licenses/Roslyn-ThirdPartyNotices.rtf) |
+| Microsoft.CodeAnalysis.Analyzers, build only | 3.11.0 | MIT, according to NuGet metadata; not distributed as a CLI assembly |
+| Microsoft.Extensions.Caching.Abstractions/Memory, DependencyInjection.Abstractions, Logging.Abstractions, Options and Primitives | 9.0.9 | .NET Foundation and Contributors; [MIT](docs/licenses/NET-Foundation-MIT.txt) and [additional notices](docs/licenses/NET-ThirdPartyNotices.txt) |
+| System.Configuration.ConfigurationManager, Diagnostics.EventLog and Security.Cryptography.ProtectedData | 9.0.9 | The same [MIT](docs/licenses/NET-Foundation-MIT.txt) and [.NET notices](docs/licenses/NET-ThirdPartyNotices.txt) |
+| Microsoft.NETFramework.ReferenceAssemblies.net48 | 1.0.3 | Copyright (c) 2019 Microsoft; [MIT](docs/licenses/NET-Framework-ReferenceAssemblies-MIT.txt), specified by the package's licenseUrl |
 
-Los archivos de referencia net48 se copian como metadatos; no se ejecutan ni son el runtime de .NET Framework.
+net48 reference files are copied as metadata; they are not executed and are not the .NET Framework runtime.
 
-Los textos de Spark y los avisos adicionales .NET/Roslyn se conservan desde los paquetes exactos, sin resumir sus condiciones. Fuentes de licencias: [Spark](https://github.com/SparkViewEngine/spark/blob/a33890e3edb8b9a5517135f42ab296375d39fcaa/license.txt), [MarkdownSharp](https://github.com/StackExchange/MarkdownSharp/blob/master/LICENSE), [Roslyn](https://github.com/dotnet/roslyn/blob/main/License.txt), [referencias Microsoft](https://github.com/Microsoft/dotnet/blob/main/LICENSE).
+Spark texts and additional .NET/Roslyn notices are preserved from the exact packages, without summarizing their terms. License sources: [Spark](https://github.com/SparkViewEngine/spark/blob/a33890e3edb8b9a5517135f42ab296375d39fcaa/license.txt), [MarkdownSharp](https://github.com/StackExchange/MarkdownSharp/blob/master/LICENSE), [Roslyn](https://github.com/dotnet/roslyn/blob/main/License.txt), [Microsoft references](https://github.com/Microsoft/dotnet/blob/main/LICENSE).
 
-## Distribución y mantenimiento
+## Distribution and maintenance
 
-Al preparar una distribución del CLI, incluya license.md, este documento y docs/licenses junto al ejecutable. El sitio generado recibe automáticamente sus propios avisos de recursos, sin incluir dependencias del CLI que no forman parte del HTML.
+When preparing a CLI distribution, include license.md, this document and docs/licenses alongside the executable. The generated site automatically receives its own resource notices, without CLI dependencies that are not part of the HTML.
 
-Si actualiza paquetes o sustituye recursos, revise sus licencias, titulares y avisos. No elimine un aviso solo por reemplazar la atribución visual del footer. Las bibliotecas heredadas se modernizarán según la hoja de ruta; su inclusión aquí no acredita que estén actualizadas o libres de vulnerabilidades.
+If you update packages or replace resources, review their licenses, copyright holders and notices. Do not remove a notice just because the visual footer attribution changes. Legacy libraries will be modernized according to the roadmap; their inclusion here does not establish that they are up to date or free of vulnerabilities.

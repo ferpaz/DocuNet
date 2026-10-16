@@ -1,26 +1,26 @@
-# Tecnología y convenciones
+# Technology and conventions
 
-Tecnologías utilizadas y convenciones para contribuir al proyecto.
+Technologies and conventions used to contribute to the project.
 
-| Área | Tecnología |
+| Area | Technology |
 | --- | --- |
-| CLI y bibliotecas | C#, .NET 10; referencias anulables habilitadas |
-| Solución | Formato .slnx, proyectos y configuración bajo src/ |
-| Lectura de DLL | System.Reflection.Metadata / PEReader; sin ejecutar código ni constructores de atributos de entrada |
-| Documentación XML | System.Xml y LINQ to XML; conservar IDs originales, prohibir DTD |
-| Plantillas | Spark externo editable; 1.8.2.4-alpha con Roslyn, validado en .NET 10 |
-| Pruebas | **xUnit.net** |
-| Mocks y sustitutos | **NSubstitute**, cuando se necesiten colaboradores simulados |
-| Validación HTML | AngleSharp en pruebas; comprobar destinos, fragmentos e IDs con parser HTML |
+| CLI and libraries | C#, .NET 10; nullable reference types enabled |
+| Solution | .slnx format, projects and configuration under src/ |
+| DLL reading | System.Reflection.Metadata / PEReader; no execution of input code or attribute constructors |
+| XML documentation | System.Xml and LINQ to XML; preserve original IDs, prohibit DTDs |
+| Templates | Editable external Spark; 1.8.2.4-alpha with Roslyn, validated on .NET 10 |
+| Tests | **xUnit.net** |
+| Mocks and substitutes | **NSubstitute**, when simulated collaborators are needed |
+| HTML validation | AngleSharp in tests; check targets, fragments and IDs using an HTML parser |
 | IDE | JetBrains Rider, Visual Studio Code, Visual Studio 2026 |
 
-No usar MSTest, NUnit, Moq ni otro framework de mocks por defecto. Evitar mocks para los casos que deban probar realmente metadatos, archivos o renderizado; usar fixtures propios y directorios aislados.
+Do not use MSTest, NUnit, Moq or another mocking framework by default. Avoid mocks for cases that must test real metadata, files or rendering; use project-owned fixtures and isolated directories.
 
-Paquetes de pruebas fijados: xunit.v3 4.0.2 (nombre del paquete de xUnit.net), xunit.runner.visualstudio 4.0.1, Microsoft.NET.Test.Sdk 18.10.1 y NSubstitute 6.2.0. AngleSharp 1.8.5 se utiliza para validar HTML. Las dependencias resueltas quedan en packages.lock.json; no desactivar auditoría ni warnings para ocultar fallos.
+Pinned test packages: xunit.v3 4.0.2 (the xUnit.net package name), xunit.runner.visualstudio 4.0.1, Microsoft.NET.Test.Sdk 18.10.1 and NSubstitute 6.2.0. AngleSharp 1.8.5 validates HTML. Resolved dependencies are recorded in packages.lock.json; do not disable auditing or warnings to hide failures.
 
-Fuentes consultadas: [xUnit](https://www.nuget.org/packages/xunit.v3), [NSubstitute](https://www.nuget.org/packages/NSubstitute), [AngleSharp](https://www.nuget.org/packages/AngleSharp). Se contrastaron versiones estables con el feed oficial NuGet al implementarlas; una versión declarada no sustituye la validación.
+Sources consulted: [xUnit](https://www.nuget.org/packages/xunit.v3), [NSubstitute](https://www.nuget.org/packages/NSubstitute), [AngleSharp](https://www.nuget.org/packages/AngleSharp). Stable versions were checked against the official NuGet feed when implemented; a declared version is not a substitute for validation.
 
-Proyecto de pruebas: src/tests/DocuNet.Tests/. Ejecutar desde src:
+Test project: src/tests/DocuNet.Tests/. Run from src:
 
 ```powershell
 dotnet restore
@@ -28,26 +28,26 @@ dotnet build
 dotnet test
 ```
 
-La [organización del código fuente](source-layout.md) detalla la estructura. Los resultados reales por plataforma se registran en el expediente del requerimiento.
+[Source layout](source-layout.md) describes the structure. Actual platform results are recorded in the requirement record.
 
-Metadatos de plataforma heredada: Microsoft.NETFramework.ReferenceAssemblies.net48 1.0.3. Sus DLL de referencia se copian como datos a ReferenceAssemblies/net48; no se cargan en el CLR. Estas referencias permiten resolver herencia de Framework sin instalar ni ejecutar su runtime en el sistema anfitrión.
+Legacy platform metadata: Microsoft.NETFramework.ReferenceAssemblies.net48 1.0.3. Its reference DLLs are copied as data to ReferenceAssemblies/net48; they are not loaded into the CLR. These references allow Framework inheritance resolution without installing or executing its runtime on the host system.
 
-Cobertura: Microsoft.Testing.Extensions.CodeCoverage 18.12.0, integrado con Microsoft.Testing.Platform. Umbrales por proyecto de producción: 90% de líneas y 80% de ramas; procedimiento y evidencia en [pruebas y cobertura](testing.md).
+Coverage: Microsoft.Testing.Extensions.CodeCoverage 18.12.0, integrated with Microsoft.Testing.Platform. Thresholds per production project: 90% lines and 80% branches; procedure and evidence in [testing and coverage](testing.md).
 
-## Versión y metadatos de los ensamblados
+## Assembly version and metadata
 
-`src/Directory.Build.props` centraliza la versión de DocuNet (`1.0.0`), autor y compañía (`Fernando Paz`), producto, título por proyecto, descripciones y copyright (`Copyright (c) 2026 Fernando Paz`). La expresión de licencia de los paquetes es `MIT`, conforme a `license.md`; los avisos y licencias de terceros se conservan por separado.
+src/Directory.Build.props centralizes the DocuNet version (1.0.0), author and company (Fernando Paz), product, per-project title, descriptions and copyright (Copyright (c) 2026 Fernando Paz). The package license expression is MIT, matching license.md; third-party notices and licenses are preserved separately.
 
-El SDK genera los atributos de ensamblado a partir de estas propiedades: con `Version=1.0.0`, `AssemblyVersion` y `FileVersion` resultan en `1.0.0.0`. La versión informativa parte de `1.0.0` y puede incluir el hash del commit que añade el SDK para trazabilidad. Para nuevas entregas, actualizar `Version` en ese archivo y verificar los metadatos de las DLL y del ejecutable publicados. Los metadatos específicos de los fixtures de pruebas pueden sobrescribir los valores comunes.
+The SDK generates assembly attributes from these properties: with Version=1.0.0, AssemblyVersion and FileVersion are 1.0.0.0. The informational version starts with 1.0.0 and may include the commit hash added by the SDK for traceability. For new releases, update Version in that file and verify metadata in published DLLs and the executable. Test fixture metadata can override shared values.
 
-Referencia: [atributos de ensamblado generados por el SDK de .NET](https://learn.microsoft.com/en-us/dotnet/standard/assembly/set-attributes-project-file).
+Reference: [assembly attributes generated by the .NET SDK](https://learn.microsoft.com/en-us/dotnet/standard/assembly/set-attributes-project-file).
 
-## Gestión central de paquetes NuGet
+## Central NuGet package management
 
-Usar Central Package Management de NuGet. `src/Directory.Packages.props` habilita la gestión central y define las versiones de los paquetes de DocuNet.Cli, DocuNet.Core y DocuNet.Rendering. Los proyectos DocuNet.Tests y DocuNet.TestFixtures, ubicados bajo `src/tests/`, usan automáticamente el catálogo independiente `src/tests/Directory.Packages.props` más cercano a sus proyectos; TestFixtures participa en este grupo aunque actualmente no necesita paquetes directos.
+Use NuGet Central Package Management. src/Directory.Packages.props enables central management and defines package versions for DocuNet.Cli, DocuNet.Core and DocuNet.Rendering. DocuNet.Tests and DocuNet.TestFixtures, under src/tests/, automatically use their nearest independent src/tests/Directory.Packages.props catalog; TestFixtures belongs to this group even though it currently needs no direct packages.
 
-Los proyectos conservan sus `PackageReference` y opciones como `PrivateAssets`, `IncludeAssets` y `GeneratePathProperty`, pero no declaran versiones ni `VersionOverride`. Agregar una versión al catálogo no agrega automáticamente una dependencia a todos los proyectos. Las dependencias transitivas de los proyectos de producción referenciados por las pruebas conservan su resolución habitual.
+Projects keep their PackageReference items and settings such as PrivateAssets, IncludeAssets and GeneratePathProperty, but do not declare versions or VersionOverride. Adding a version to the catalog does not automatically add a dependency to every project. Transitive dependencies of production projects referenced by tests retain their usual resolution.
 
-Para cambiar dependencias, editar el catálogo correspondiente, restaurar y revisar los cambios de `packages.lock.json`. Mantener los archivos de bloqueo por proyecto y comprobar `dotnet restore --locked-mode`, compilación y pruebas antes de integrar los cambios.
+To change dependencies, edit the appropriate catalog, restore and review packages.lock.json changes. Keep lock files per project and check dotnet restore --locked-mode, build and tests before integrating changes.
 
-Referencia: [Central Package Management de NuGet](https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management).
+Reference: [NuGet Central Package Management](https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management).
